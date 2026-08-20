@@ -14,17 +14,17 @@ section {
     justify-content: center;
     #my {
       font-family: Poppins;
-      font-weight:400;
+      font-weight: 400;
       letter-spacing: -5px;
     }
-    #h{
-      font-family:fc;
+    #h {
+      font-family: fc;
     }
-    #in{
-      font-family:arial;
+    #in {
+      font-family: arial;
       font-weight: 200;
       letter-spacing: -2px;
-      font-size:20px;
+      font-size: 20px;
     }
   }
   .part2 {
@@ -41,6 +41,9 @@ section {
       font-size: 24px;
     }
   }
+  .part_2_mobile{
+    display:none;
+  }
 
   .part3 {
     width: 100%;
@@ -48,7 +51,7 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
-    position:relative;
+    position: relative;
 
     .signUp {
       height: 50px;
@@ -57,7 +60,7 @@ section {
       justify-content: center;
       align-items: center;
       text-align: center;
-      font-family:fc-light;
+      font-family: fc-light;
       font-size: 22px;
       background-color: #0d917e;
       padding: 5px 20px;
@@ -70,23 +73,84 @@ section {
     }
     .logIn {
       height: 50px;
-      width:50%;
+      width: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
       text-align: center;
-      right:0;
+      right: 0;
       background-color: #fac5d2;
       font-family: fc-light;
       font-size: 22px;
       padding: 5px 20px;
     }
-    
   }
-  app-signup{
-    width:100%;
-    height:100%;
-    position:absolute;
-    pointer-events:none;
+  app-signup {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+  }
+  // .hamburger_menu{
+  //   display:none;
+  //   flex-direction:column;
+  //   justify-content: center;
+  //   width:32px;
+  //   height:32px;
+  //   gap:5px;
+  //   background:none;
+  //   border:none;
+  //   cursor:pointer;
+  //   z-index:1100;
+  //   flex-shrink:0;
+  //   span {
+  //     display: block;
+  //     width: 100%;
+  //     height: 3px;
+  //     background-color: #000;
+  //   }
+  // }
+}
+
+@media screen and (max-width: 768px) {
+  section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    padding: 0;
+    position: relative;
+    
+    .part2{
+      display:none;
+    }
+    .part_2_mobile {
+      display: flex;
+      width: 100%;
+      height: 50px;
+      border-top: 1px solid black;
+      border-bottom:1px solid black;
+      overflow: hidden;      // clips everything outside this "window"
+      position: relative;
+    }
+
+    .mobile_track {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.3s ease;   // makes the swipe glide, not snap
+    }
+
+    .sub-section_mobile {
+      flex: 0 0 100%;   // each item takes exactly 100% of the window's width
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-family: fc;
+      font-size: 20px;
+    }
   }
 }
