@@ -1,0 +1,22 @@
+<section class="sec_1">
+    <app-navbar></app-navbar>
+    <h1>Browse Cases</h1>
+    <div class="quick_access">
+        @for(eachproduct of productList; track eachproduct.id) {
+            <a href="#"><div class="items">{{eachproduct.prod_name}}</div></a>
+        }
+    </div>
+    <section class="part_1">
+        <div class="left">
+            <h1> Unmatched Style. Precision Fits. <br> Built Exclusively for iPhone.</h1>
+            <p>Discover hand-picked cases, ultra-clear screen protection, and premium MagSafe accessories crafted
+                exclusively for the Apple ecosystem.</p>
+        </div>
+        
+    </section>
+</section>
+<section class="sec_2">
+    <app-cart></app-cart>
+</section>
+
+<!-- <div class="card top-card">The Ultimate Defense & Aesthetic for Your iPhone.</div> -->

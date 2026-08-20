@@ -1,1 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Story+Script&display=swap');
+
+@font-face {
+    font-family: fc;
+    src: url(../FormulaCondensed-Regular.otf);
+}
+@font-face {
+    font-family: fc-light;
+    src: url(../FormulaCondensed-Light.otf);
+}
+@font-face {
+    font-family: Pana pro;
+    src: url(../Panama.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body{
+    height:100%;
+    width:100%;
+}

@@ -1,0 +1,17 @@
+<section>
+    <div class="part1">
+        <h1 id="my">my</h1>
+        <h1 id="h">H</h1>
+        <h1 id="in">.in</h1>
+    </div>
+    <div class="part2">
+        @for(eachItem of items; track eachItem.id) {
+        <div class="sub-section">{{eachItem.name}}</div>
+        }
+    </div>
+    <div class="part3">
+        <div class="signUp" (click)="toggleRegistration()">Create an account</div>
+        <div class="logIn">Login here!</div>
+        <app-signup></app-signup>
+    </div>
+</section>

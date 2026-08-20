@@ -1,0 +1,38 @@
+.main {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+  img {
+    max-width: 400px;
+    font-family: Poppins;
+    font-size: 90px;
+    color: #333;
+    font-weight: 400;
+    height:auto;
+  }
+  // #lastName {
+  //   font-family: Poppins;
+  //   font-size: 90px;
+  //   color: white;
+  //   font-weight: 400;
+  //   height:auto;
+  // }
+  .green {
+    width: 100%;
+    background-color: #0d917e;
+    position: absolute;
+    bottom:0;
+  }
+  
+  .pink {
+    width: 100%;
+    background-color: #fac5d2;
+    position: absolute;
+    bottom:0;
+  }
+}
