@@ -58,7 +58,7 @@ export class LoaderComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.router.navigate(['/featured-products']);
+      this.router.navigate(['/landing']);
     }, 2400);
   }
 }

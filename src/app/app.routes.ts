@@ -9,7 +9,7 @@ export const routes: Routes = [
         component: LoaderComponent
     },
     {
-        path:'featured-products',
+        path:'landing',
         component: LandingComponent
     }
 ];

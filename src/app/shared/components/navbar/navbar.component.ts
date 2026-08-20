@@ -87,11 +87,6 @@ export class NavbarComponent implements AfterViewInit {
           duration: 0.6,
           ease: 'power2.out',
         })
-        .to(breakLine,{
-          width:'0',
-          height: '0',
-          ease: 'power2.out'
-        },'-=0.3')
         .to(loginButton, {
           width: '0%',
           height: '0%',
