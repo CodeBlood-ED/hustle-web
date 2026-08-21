@@ -4,26 +4,22 @@
         <h1 id="h">H</h1>
         <h1 id="in">.in</h1>
     </div>
-    <!-- <div class="hamburger_menu" (click)="openHamburgerMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div> -->
     <div class="part2">
         @for(eachItem of items; track eachItem.id) {
-        <div class="sub-section">{{eachItem.name}}</div>
+        <a href="https://google.com"><div class="sub-section">{{eachItem.name}}</div></a>
         }
     </div>
     <div class="part_2_mobile" (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)">
         <div class="mobile_track" [style.transform]="'translateX(' + (-activeIndex * 100) + '%)'">
             @for(eachItem of items; track eachItem.id) {
-            <div class="sub-section_mobile">{{eachItem.name}}</div>
+            <div class="sub-section_mobile"><a href="">{{eachItem.name}}</a></div>
             }
         </div>
     </div>
     <div class="part3">
         <div class="signUp" (click)="toggleRegistration()">Create an account</div>
-        <div class="logIn">Login here!</div>
+        <div class="logIn" (click)="toggleLogin()">Login here!</div>
         <app-signup></app-signup>
+        <app-login></app-login>
     </div>
 </section>
