@@ -1,97 +1,46 @@
-import { AfterViewInit, Component, ElementRef } from '@angular/core';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { AfterViewInit, Component, ElementRef, viewChild } from '@angular/core';
 import { NavbarComponent } from '../../../shared/components/navbar/navbar.component';
-import { CartComponent } from '../cart/cart.component';
+import { RouterOutlet } from '@angular/router';
+import { gsap, ScrollTrigger } from 'gsap/all';
+
 
 gsap.registerPlugin(ScrollTrigger);
+
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [NavbarComponent, CartComponent],
+  imports: [RouterOutlet, NavbarComponent],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
 })
-export class LandingComponent implements AfterViewInit {
-  tl = gsap.timeline();
-  mm = gsap.matchMedia();
-  productList = [
-    {
-      id: 1,
-      prod_name: 'iphone 17 Pro',
-    },
-    {
-      id: 1,
-      prod_name: 'iphone 17 ',
-    },
-    {
-      id: 1,
-      prod_name: 'iphone 16 Pro Max',
-    },
-    {
-      id: 1,
-      prod_name: 'iphone 16 Pro',
-    },
-    {
-      id: 1,
-      prod_name: 'iphone 16 ',
-    },
-    {
-      id: 1,
-      prod_name: 'iphone 15 Pro Max',
-    },
-    {
-      id: 1,
-      prod_name: 'iphone 15 Pro',
-    },
-    {
-      id: 1,
-      prod_name: 'iphone 15',
-    },
-  ];
+export class LandingComponent implements AfterViewInit{
+
+  divRef = viewChild.required<ElementRef<HTMLDivElement>>('part_2');
+  
   constructor(private el: ElementRef) {}
 
-  ngAfterViewInit(): void {
-    this.tl
-      .to(this.el.nativeElement.querySelector('#h1a'), {
-        y: -100,
-        opacity: 0,
-        duration: 0.3,
-        delay: 0.6,
-        scrollTrigger: {
-          trigger: this.el.nativeElement.querySelector('p'),
-          scroller: 'body',
-          start: 'top 40%',
-          end: 'top 30%',
-          scrub: 1,
-        },
-      })
-      .to(this.el.nativeElement.querySelector('#h1b'), {
-        y: -100,
-        opacity: 0,
-        duration: 0.3,
-        delay: 0.9,
-        scrollTrigger: {
-          trigger: this.el.nativeElement.querySelector('.sec_2'),
-          scroller: 'body',
-          start: 'top 60%',
-          end: 'top 50%',
-          scrub: 1,
-        },
-      })
-      .to(this.el.nativeElement.querySelector('.left p'), {
-        y: -100,
-        opacity: 0,
-        duration: 0.3,
-        delay: 1.2,
-        scrollTrigger: {
-          trigger: this.el.nativeElement.querySelector('.sec_2'),
-          scroller: 'body',
-          start: 'top 55%',
-          end: 'top 45%',
-          scrub: 1,
-        },
-      });
+  ngAfterViewInit() : void {
+    gsap.to(this.el.nativeElement.querySelector('.green_bg'), {
+      width: '30%',
+      scrollTrigger: {
+        trigger: 'divRef',
+        scroller: 'body',
+        markers: true,
+        scrub: 1,
+        pin: true
+      }
+    });
+    gsap.to(this.el.nativeElement.querySelector('.pink_bg'), {
+      width: '70%',
+      scrollTrigger: {
+        trigger: 'divRef',
+        scroller: 'body',
+        markers: true,
+        scrub: 1,
+        pin:true
+      }
+    });
+
   }
 }

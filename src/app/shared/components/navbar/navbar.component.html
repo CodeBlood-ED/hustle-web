@@ -6,7 +6,7 @@
     </div>
     <div class="part2">
         @for(eachItem of items; track eachItem.id) {
-        <a href="https://google.com"><div class="sub-section">{{eachItem.name}}</div></a>
+        <a href="#"><div class="sub-section">{{eachItem.name}}</div></a>
         }
     </div>
     <div class="part_2_mobile" (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)">

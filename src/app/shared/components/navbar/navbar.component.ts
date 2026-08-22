@@ -48,20 +48,29 @@ export class NavbarComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    gsap.from(this.el.nativeElement.querySelector('.logo'), {
+    gsap.from(this.el.nativeElement.querySelector('.part1'), {
       y: -30,
       opacity: 0,
-      duration: 0.7,
+      duration: 0.3,
       delay: 0.5,
     });
 
-    gsap.from(this.el.nativeElement.querySelectorAll('li'), {
+    gsap.from(this.el.nativeElement.querySelectorAll('.sub-section'), {
       y: -30,
       opacity: 0,
-      duration: 0.7,
+      duration: 0.3,
       delay: 1,
       stagger: 0.25,
     });
+
+    gsap.from(this.el.nativeElement.querySelectorAll('.part3'), {
+      y: -30,
+      opacity: 0,
+      duration: 0.3,
+      delay: 2,
+      stagger: 0.25,
+    });
+    
   }
 
   toggleRegistration() {
@@ -201,11 +210,4 @@ export class NavbarComponent implements AfterViewInit {
         );
     }
   }
-
-  // openHamburgerMenu() {
-  //   this.menuOpen = true;
-  // }
-  // closeHamburgerMenu() {
-  //   this.menuOpen = false;
-  // }
 }

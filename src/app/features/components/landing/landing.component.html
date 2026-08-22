@@ -1,22 +1,21 @@
 <section class="sec_1">
     <app-navbar></app-navbar>
-    <h1>Browse Cases</h1>
-    <div class="quick_access">
-        @for(eachproduct of productList; track eachproduct.id) {
-            <a href="#"><div class="items">{{eachproduct.prod_name}}</div></a>
-        }
-    </div>
-    <section class="part_1">
-        <div class="left">
-            <h1 id="h1a"> Unmatched Style. Precision Fits.</h1> <br><h1 id="h1b"> Built Exclusively for iPhone.</h1>
-            <p>Discover hand-picked cases, ultra-clear screen protection, and premium MagSafe accessories crafted
-                exclusively for the Apple ecosystem.</p>
-        </div>
-        
-    </section>
+    <router-outlet></router-outlet>
 </section>
 <section class="sec_2">
-    <app-cart></app-cart>
+    <section class="green_bg"></section>
+    <section class="pink_bg">
+        <h1>Reason why you choose myH?</h1>
+        <h3>Find out what our proud customers say about us...</h3>
+        <ul>
+            <li>Trusted by 10,000+ iPhone owners</li>
+            <li>Precision fit (exact cutouts per iPhone model)</li>
+            <li>Material/durability claim (drop-tested, MagSafe-compatible, etc.)</li>
+            <li>Fast shipping / easy returns</li>
+            <li>Warranty or replacement policy</li>
+        </ul>
+    </section>
 </section>
+
 
 <!-- <div class="card top-card">The Ultimate Defense & Aesthetic for Your iPhone.</div> -->

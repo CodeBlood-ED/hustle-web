@@ -1,0 +1,20 @@
+<section class="part_1">
+    <h1>Browse Cases</h1>
+    <div class="quick_access">
+        @for(eachproduct of productList; track eachproduct.id) {
+        <a href="#">
+            <div class="items">{{eachproduct.prod_name}}</div>
+        </a>
+        }
+    </div>
+</section>
+
+<section class="part_2" #part_2>
+    <div class="left">
+        <h1 id="h1a"> Unmatched Style. Precision Fits.</h1> <br>
+        <h1 id="h1b"> Built Exclusively for iPhone.</h1>
+        <p>Discover hand-picked cases, ultra-clear screen protection, and premium MagSafe accessories crafted
+            exclusively for the Apple ecosystem.</p>
+    </div>
+
+</section>
