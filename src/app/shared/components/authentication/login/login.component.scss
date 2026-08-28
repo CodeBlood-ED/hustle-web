@@ -77,3 +77,37 @@
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .main {
+    padding: 20px 15px;
+    top: 0;
+    h3 {
+      font-size: 30px;
+    }
+    .login-dialog {
+      gap: 1.5vh;
+      .input-group {
+        gap: 1.5vh;
+        input[type="password"],
+        input[type="email"] {
+          width: 90%;
+          height: 50px;
+          font-size: 20px;
+        }
+      }
+      .button-group {
+        flex-direction: column;
+        gap: 12px;
+        button {
+          width: 90%;
+          height: 50px;
+          font-size: 18px;
+        }
+      }
+      a {
+        font-size: 16px;
+      }
+    }
+  }
+}

@@ -99,7 +99,7 @@ export class HeroComponent implements OnInit, AfterViewInit {
         trigger: this.el.nativeElement.querySelector('.sec_2'),
         scroller: 'body',
         start: 'top top',
-        end: '+=300',
+        end: '+=400',
         scrub: true,
       }
     })
@@ -113,19 +113,20 @@ export class HeroComponent implements OnInit, AfterViewInit {
         trigger: this.el.nativeElement.querySelector('.sec_2'),
         scroller: 'body',
         start: 'top top',
-        end: '+=300',
+        end: '+=400',
         scrub: true,
       }
     })
     gsap.to(this.el.nativeElement.querySelector('.part_2 .left p'),{
       y: -100,
       opacity: 0.5,
+      color:'white',
       duration:1,
       scrollTrigger: {
         trigger: this.el.nativeElement.querySelector('.sec_2'),
         scroller: 'body',
         start: 'top top',
-        end: '+=300',
+        end: '+=400',
         scrub: true,
       }
     })

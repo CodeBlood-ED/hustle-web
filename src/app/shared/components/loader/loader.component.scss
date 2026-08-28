@@ -36,3 +36,13 @@
     bottom:0;
   }
 }
+
+
+@media screen and (max-width: 768px) {
+  .main {
+    img {
+      max-width: 80vw;
+    }
+  }
+}
+

@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, viewChild } from '@angular/core';
 import { NavbarComponent } from '../../../shared/components/navbar/navbar.component';
 import { RouterOutlet } from '@angular/router';
 import { gsap, ScrollTrigger } from 'gsap/all';
+import { FooterComponent } from '../../../shared/components/footer/footer.component';
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -10,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent],
+  imports: [RouterOutlet, NavbarComponent, FooterComponent],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
 })
@@ -26,7 +27,6 @@ export class LandingComponent implements AfterViewInit{
       scrollTrigger: {
         trigger: 'divRef',
         scroller: 'body',
-        markers: true,
         scrub: 1,
         pin: true
       }
@@ -36,11 +36,9 @@ export class LandingComponent implements AfterViewInit{
       scrollTrigger: {
         trigger: 'divRef',
         scroller: 'body',
-        markers: true,
         scrub: 1,
         pin:true
       }
     });
-
   }
 }
