@@ -1,17 +1,18 @@
-import { AfterViewInit, Component, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { gsap } from 'gsap';
 import { SignupComponent } from '../authentication/signup/signup.component';
 import { LoginComponent } from '../authentication/login/login.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
-  imports: [CommonModule, SignupComponent, LoginComponent],
+  imports: [CommonModule, SignupComponent, LoginComponent, RouterLink],
 })
-export class NavbarComponent implements AfterViewInit {
+export class NavbarComponent implements AfterViewInit, OnDestroy {
   constructor(private el: ElementRef) {}
   openRegistration: boolean = false;
   openLogin: boolean = false;
@@ -21,10 +22,10 @@ export class NavbarComponent implements AfterViewInit {
   tl_login = gsap.timeline();
 
   items = [
-    { id: 0, name: 'Categories' },
-    { id: 1, name: 'New arrivals' },
-    { id: 2, name: 'Contact' },
-    { id: 3, name: 'About us' },
+    { id: 0, name: 'Categories', page_address: '/landing/categories' },
+    { id: 1, name: 'New arrivals', page_address: '/landing/new-arrivals' },
+    { id: 2, name: 'Contact', page_address: '/landing/contact' },
+    { id: 3, name: 'About us', page_address: '/landing/about' },
   ];
   activeIndex = 0;
   private touchStartX = 0;
@@ -70,8 +71,9 @@ export class NavbarComponent implements AfterViewInit {
       delay: 2,
       stagger: 0.25,
     });
-    
   }
+
+  ngOnDestroy(): void {}
 
   toggleRegistration() {
     this.openRegistration = !this.openRegistration;
@@ -109,7 +111,7 @@ export class NavbarComponent implements AfterViewInit {
           opacity: 1,
           height: 'auto',
           pointerEvents: 'auto',
-          zIndex:'1100',
+          zIndex: '1100',
           duration: 0.2,
           ease: 'power2.out',
         });
@@ -142,7 +144,6 @@ export class NavbarComponent implements AfterViewInit {
           '-=0.5',
         );
     }
-    this.tl.kill;
   }
 
   toggleLogin() {
@@ -163,19 +164,23 @@ export class NavbarComponent implements AfterViewInit {
           duration: 0.2,
           ease: 'power2.out',
         })
-        .to(signUpButton, {
-          width: '0%',
-          padding: '0',
-          left: '-50%',
-          overflow: 'hidden',
-          color: '#0d917e',
-          ease: 'power2.out',
-        },'-=0.3')
+        .to(
+          signUpButton,
+          {
+            width: '0%',
+            padding: '0',
+            left: '-50%',
+            overflow: 'hidden',
+            color: '#0d917e',
+            ease: 'power2.out',
+          },
+          '-=0.3',
+        )
         .to(loginForm, {
           opacity: 1,
           height: 'auto',
           pointerEvents: 'auto',
-          zIndex:'1100',
+          zIndex: '1100',
           duration: 0.2,
           ease: 'power2.out',
         });

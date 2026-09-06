@@ -18,31 +18,31 @@ export class HeroComponent implements OnInit, AfterViewInit {
       prod_name: 'iphone 17 Pro',
     },
     {
-      id: 1,
+      id: 2,
       prod_name: 'iphone 17 ',
     },
     {
-      id: 1,
+      id: 3,
       prod_name: 'iphone 16 Pro Max',
     },
     {
-      id: 1,
+      id: 4,
       prod_name: 'iphone 16 Pro',
     },
     {
-      id: 1,
+      id: 5,
       prod_name: 'iphone 16 ',
     },
     {
-      id: 1,
+      id: 6,
       prod_name: 'iphone 15 Pro Max',
     },
     {
-      id: 1,
+      id: 7,
       prod_name: 'iphone 15 Pro',
     },
     {
-      id: 1,
+      id: 8,
       prod_name: 'iphone 15',
     },
   ];
