@@ -1,1 +1,18 @@
-<p>category works!</p>
+<section class="category-page">
+  <header class="page-header">
+    <p class="eyebrow">Shop by device</p>
+    <h1>iPhone cases collection</h1>
+  </header>
+
+  <div class="category-grid">
+    @for (category of categories; track category.model) {
+      <app-category-card
+        [title]="category.label"
+        [subtitle]="category.subtitle"
+        [count]="category.count"
+        [accent]="category.accent"
+        [productPath]="'/landing/categories/' + category.model"
+      ></app-category-card>
+    }
+  </div>
+</section>

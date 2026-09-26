@@ -1,13 +1,28 @@
 <section class="main">
+  <form [formGroup]="loginForm" class="login-dialog" (ngSubmit)="onSubmit()">
     <h3>Login here!</h3>
-    <div class="login-dialog">
-        <div class="input-group">
-            <input type="email" id="email" placeholder="Email">
-            <input type="password" id="password" placeholder="Password">
-        </div>
-        <div class="button-group">
-            <button type="submit" class="login-btn">Go</button>
-        </div>
-        <h3><a href="/sign-up">Register here!</a></h3>
+
+    <div class="input-group">
+      <input
+        type="email"
+        id="email"
+        placeholder="Email"
+        formControlName="email"
+        [class.invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+      />
+      <input
+        type="password"
+        id="password"
+        placeholder="Password"
+        formControlName="password"
+        [class.invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+      />
     </div>
+
+    <div class="button-group">
+      <button type="submit" class="login-btn" [disabled]="loginForm.invalid">Go</button>
+    </div>
+
+    <h3><a href="/landing/categories">Register here!</a></h3>
+  </form>
 </section>

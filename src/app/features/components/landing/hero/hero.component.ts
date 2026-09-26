@@ -52,38 +52,43 @@ export class HeroComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.tl
       .from(this.el.nativeElement.querySelector('.part_1 h1'), {
-        x: -30,
+        x: -18,
         opacity: 0,
-        duration: 0.3,
-        delay: 2.5,
+        duration: 0.68,
+        delay: 1.9,
+        ease: 'power3.out',
       })
 
       .from(this.el.nativeElement.querySelectorAll('.part_1 .quick_access'), {
-        x: -30,
+        x: -14,
         opacity: 0,
-        duration: 0.3,
+        duration: 0.62,
         delay: 0,
+        ease: 'power3.out',
       })
 
       .from(this.el.nativeElement.querySelectorAll('.part_2 .left #h1a'), {
-        y: -30,
+        y: -16,
         opacity: 0,
-        duration: 0.3,
+        duration: 0.64,
         delay: 0,
+        ease: 'power3.out',
       })
 
       .from(this.el.nativeElement.querySelectorAll('.part_2 .left #h1b'), {
-        y: -30,
+        y: -14,
         opacity: 0,
-        duration: 0.3,
+        duration: 0.64,
         delay: 0,
+        ease: 'power3.out',
       })
 
       .from(this.el.nativeElement.querySelectorAll('.part_2 .left p'), {
-        y: -30,
+        y: -12,
         opacity: 0,
-        duration: 0.3,
+        duration: 0.64,
         delay: 0,
+        ease: 'power3.out',
       });
   }
 
@@ -99,22 +104,22 @@ export class HeroComponent implements OnInit, AfterViewInit {
         trigger: this.el.nativeElement.querySelector('.sec_2'),
         scroller: 'body',
         start: 'top top',
-        end: '+=400',
-        scrub: true,
+        end: '+=520',
+        scrub: 1,
       }
     })
     gsap.to(this.el.nativeElement.querySelector('.part_2 .left #h1b'),{
       y: -100,
       opacity: 0.5,
       color: 'white',
-      delay: 0.8,
+      delay: 0.25,
       duration:1,
       scrollTrigger: {
         trigger: this.el.nativeElement.querySelector('.sec_2'),
         scroller: 'body',
         start: 'top top',
-        end: '+=400',
-        scrub: true,
+        end: '+=520',
+        scrub: 1,
       }
     })
     gsap.to(this.el.nativeElement.querySelector('.part_2 .left p'),{
@@ -126,8 +131,8 @@ export class HeroComponent implements OnInit, AfterViewInit {
         trigger: this.el.nativeElement.querySelector('.sec_2'),
         scroller: 'body',
         start: 'top top',
-        end: '+=400',
-        scrub: true,
+        end: '+=520',
+        scrub: 1,
       }
     })
     

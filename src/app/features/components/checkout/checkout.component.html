@@ -1,0 +1,163 @@
+@if (isCartCheckout && cart.entries().length === 0) {
+  <main class="checkout-page unavailable-page">
+    <h1>Your bag is empty.</h1>
+    <a class="back-link" [routerLink]="['/landing/categories']">Browse iPhone cases</a>
+  </main>
+} @else if (product || (isCartCheckout && cart.entries().length > 0)) {
+  <main class="checkout-page">
+    <header class="checkout-header">
+      <a class="wordmark" [routerLink]="['/landing']" aria-label="Hustle home">Hustle<span>.</span></a>
+      <div class="checkout-progress" aria-label="Checkout progress">
+        <span class="active-step">Information</span><i></i><span>Payment</span>
+      </div>
+      @if (isCartCheckout) {
+        <a class="back-link" [routerLink]="['/cart']">Back to cart</a>
+      } @else {
+        <a class="back-link" [routerLink]="['/landing/categories', model]">Continue shopping</a>
+      }
+    </header>
+
+    <div class="checkout-layout">
+      <form class="checkout-form" #checkoutForm="ngForm" (ngSubmit)="submitOrder(checkoutForm)" novalidate>
+        <section class="form-section">
+          <div class="section-heading">
+            <div><span class="step-number">01</span><h1>Delivery details</h1></div>
+            <span class="secure-note">Secure checkout</span>
+          </div>
+
+          <label class="field-label" for="email">Email address</label>
+          <input id="email" class="field" type="email" name="email" placeholder="you@example.com" autocomplete="email" required email ngModel />
+
+          <label class="field-label" for="full-name">Full name</label>
+          <input id="full-name" class="field" type="text" name="fullName" placeholder="Name on delivery" autocomplete="name" required minlength="2" ngModel />
+
+          <label class="field-label" for="address">Street address</label>
+          <input id="address" class="field" type="text" name="address" placeholder="House number and street" autocomplete="street-address" required ngModel />
+
+          <div class="field-row">
+            <div>
+              <label class="field-label" for="city">City</label>
+              <input id="city" class="field" type="text" name="city" autocomplete="address-level2" required ngModel />
+            </div>
+            <div>
+              <label class="field-label" for="postal-code">Postal code</label>
+              <input id="postal-code" class="field" type="text" name="postalCode" autocomplete="postal-code" required ngModel />
+            </div>
+          </div>
+
+          <label class="field-label" for="country">Country / region</label>
+          <select id="country" class="field" name="country" autocomplete="country-name" required ngModel>
+            <option value="" disabled selected>Select country</option>
+            <option>United States</option>
+            <option>Canada</option>
+            <option>United Kingdom</option>
+            <option>Australia</option>
+          </select>
+
+          <label class="field-label" for="phone">Phone number <span class="optional">Optional</span></label>
+          <input id="phone" class="field" type="tel" name="phone" placeholder="For delivery updates" autocomplete="tel" ngModel />
+        </section>
+
+        <section class="form-section shipping-section">
+          <div class="section-heading">
+            <div><span class="step-number">02</span><h2>Shipping method</h2></div>
+          </div>
+
+          <label class="choice-row" [class.is-selected]="shippingMethod === 'standard'">
+            <input type="radio" name="shipping" value="standard" [(ngModel)]="shippingMethod" />
+            <span class="choice-copy"><strong>Standard delivery</strong><small>5–7 business days</small></span>
+            <span class="choice-price">{{ subtotal >= 50 ? 'Free' : (4.95 | currency:'USD') }}</span>
+          </label>
+          <label class="choice-row" [class.is-selected]="shippingMethod === 'express'">
+            <input type="radio" name="shipping" value="express" [(ngModel)]="shippingMethod" />
+            <span class="choice-copy"><strong>Express delivery</strong><small>2–3 business days</small></span>
+            <span class="choice-price">{{ 9.95 | currency:'USD' }}</span>
+          </label>
+        </section>
+
+        <section class="form-section payment-section">
+          <div class="section-heading">
+            <div><span class="step-number">03</span><h2>Payment option</h2></div>
+          </div>
+          <p class="section-hint">Choose how you’d like to pay. Payment is not processed on this demo checkout.</p>
+
+          <div class="payment-options">
+            <label class="payment-option" [class.is-selected]="paymentMethod === 'card'">
+              <input type="radio" name="payment" value="card" [(ngModel)]="paymentMethod" />
+              <span class="payment-icon card-icon" aria-hidden="true">▰</span>
+              <span>Credit or debit card</span>
+            </label>
+            <label class="payment-option" [class.is-selected]="paymentMethod === 'paypal'">
+              <input type="radio" name="payment" value="paypal" [(ngModel)]="paymentMethod" />
+              <span class="payment-icon paypal-icon" aria-hidden="true">P</span>
+              <span>PayPal</span>
+            </label>
+            <label class="payment-option" [class.is-selected]="paymentMethod === 'apple-pay'">
+              <input type="radio" name="payment" value="apple-pay" [(ngModel)]="paymentMethod" />
+              <span class="payment-icon apple-icon" aria-hidden="true">A</span>
+              <span>Apple Pay</span>
+            </label>
+          </div>
+
+          <p class="payment-notice" role="status">{{ paymentMethod === 'card' ? 'Card payments will be securely collected by a payment provider once integrated.' : paymentMethod === 'paypal' ? 'PayPal will open here after a payment provider is connected.' : 'Apple Pay will be available here after a payment provider is connected.' }}</p>
+        </section>
+
+        <div class="submit-area">
+          <button class="place-order" type="submit">Continue to secure payment <span aria-hidden="true">→</span></button>
+          @if (orderMessage) { <p class="order-message" role="status">{{ orderMessage }}</p> }
+          <p class="privacy-note">Your delivery information is only used to prepare this order.</p>
+        </div>
+      </form>
+
+      <aside class="order-summary" aria-label="Order summary">
+        <div class="summary-title"><h2>Order summary</h2><span>{{ itemCount }} {{ itemCount === 1 ? 'item' : 'items' }}</span></div>
+        @if (isCartCheckout) {
+          <div class="summary-products">
+            @for (entry of cart.entries(); track entry.model + ':' + entry.id) {
+              <div class="summary-product">
+                <div class="product-art" [style.--accent]="entry.accent" aria-hidden="true"><span></span></div>
+                <div class="summary-product-copy">
+                  <strong>{{ entry.name }}</strong>
+                  <span>{{ entry.modelLabel }}</span>
+                  <div class="quantity-control" [attr.aria-label]="'Change quantity for ' + entry.name">
+                    <button type="button" [attr.aria-label]="'Decrease ' + entry.name" [disabled]="entry.quantity <= 1" (click)="updateCartQuantity(entry, -1)">−</button>
+                    <span>{{ entry.quantity }}</span>
+                    <button type="button" [attr.aria-label]="'Increase ' + entry.name" (click)="updateCartQuantity(entry, 1)">+</button>
+                  </div>
+                </div>
+                <strong class="line-price">{{ entry.unitPrice * entry.quantity | currency:'USD' }}</strong>
+              </div>
+            }
+          </div>
+        } @else if (product) {
+          <div class="summary-product">
+            <div class="product-art" [style.--accent]="product.accent" aria-hidden="true"><span></span></div>
+            <div class="summary-product-copy">
+              <strong>{{ product.name }}</strong>
+              <span>{{ modelLabel }} case</span>
+              <div class="quantity-control" aria-label="Change quantity">
+                <button type="button" aria-label="Decrease quantity" [disabled]="quantity <= 1" (click)="updateQuantity(-1)">−</button>
+                <span>{{ quantity }}</span>
+                <button type="button" aria-label="Increase quantity" (click)="updateQuantity(1)">+</button>
+              </div>
+            </div>
+            <strong class="line-price">{{ subtotal | currency:'USD' }}</strong>
+          </div>
+        }
+
+        <div class="totals">
+          <div><span>Subtotal</span><span>{{ subtotal | currency:'USD' }}</span></div>
+          <div><span>Shipping</span><span>{{ shippingCost === 0 ? 'Free' : (shippingCost | currency:'USD') }}</span></div>
+          <div><span>Estimated tax</span><span>{{ estimatedTax | currency:'USD' }}</span></div>
+          <div class="grand-total"><strong>Total</strong><strong>{{ total | currency:'USD' }}</strong></div>
+        </div>
+        <p class="summary-footnote">Taxes are estimated and may change based on your delivery address.</p>
+      </aside>
+    </div>
+  </main>
+} @else {
+  <main class="checkout-page unavailable-page">
+    <h1>We couldn’t find that product.</h1>
+    <a class="back-link" [routerLink]="['/landing/categories']">Return to the case collection</a>
+  </main>
+}

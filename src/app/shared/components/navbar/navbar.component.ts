@@ -1,22 +1,27 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { gsap } from 'gsap';
 import { SignupComponent } from '../authentication/signup/signup.component';
 import { LoginComponent } from '../authentication/login/login.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { NavbarEntranceService } from '../../services/navbar-entrance.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
-  imports: [CommonModule, SignupComponent, LoginComponent, RouterLink],
+  imports: [SignupComponent, LoginComponent, RouterLink],
 })
-export class NavbarComponent implements AfterViewInit, OnDestroy {
-  constructor(private el: ElementRef) {}
+export class NavbarComponent implements AfterViewInit {
+  constructor(
+    private el: ElementRef,
+    private router: Router,
+    private entranceAnimation: NavbarEntranceService,
+  ) {}
   openRegistration: boolean = false;
   openLogin: boolean = false;
-  //menuOpen: boolean = false;
+  menuOpen = false;
 
   tl = gsap.timeline();
   tl_login = gsap.timeline();
@@ -27,53 +32,42 @@ export class NavbarComponent implements AfterViewInit, OnDestroy {
     { id: 2, name: 'Contact', page_address: '/landing/contact' },
     { id: 3, name: 'About us', page_address: '/landing/about' },
   ];
-  activeIndex = 0;
-  private touchStartX = 0;
-
-  onTouchStart(event: TouchEvent) {
-    this.touchStartX = event.changedTouches[0].clientX;
+  toggleMenu(): void {
+    this.menuOpen = !this.menuOpen;
   }
 
-  onTouchEnd(event: TouchEvent) {
-    const touchEndX = event.changedTouches[0].clientX;
-    const deltaX = touchEndX - this.touchStartX;
-    const swipeThreshold = 40; // minimum px of movement to count as a swipe
-
-    if (deltaX < -swipeThreshold) {
-      // swiped right-to-left → advance to next item
-      this.activeIndex = Math.min(this.activeIndex + 1, this.items.length - 1);
-    } else if (deltaX > swipeThreshold) {
-      // swiped left-to-right → go back to previous item
-      this.activeIndex = Math.max(this.activeIndex - 1, 0);
-    }
+  closeMenu(): void {
+    this.menuOpen = false;
   }
 
   ngAfterViewInit(): void {
+    if (!this.entranceAnimation.shouldAnimate(this.router.url)) return;
     gsap.from(this.el.nativeElement.querySelector('.part1'), {
-      y: -30,
+      y: -18,
       opacity: 0,
-      duration: 0.3,
-      delay: 0.5,
+      duration: 0.68,
+      delay: 0.35,
+      ease: 'power3.out',
     });
 
-    gsap.from(this.el.nativeElement.querySelectorAll('.sub-section'), {
-      y: -30,
+    gsap.from(this.el.nativeElement.querySelectorAll('.part2 .sub-section'), {
+      y: -16,
       opacity: 0,
-      duration: 0.3,
-      delay: 1,
-      stagger: 0.25,
+      duration: 0.62,
+      delay: 0.65,
+      stagger: 0.1,
+      ease: 'power3.out',
     });
 
     gsap.from(this.el.nativeElement.querySelectorAll('.part3'), {
-      y: -30,
+      y: -14,
       opacity: 0,
-      duration: 0.3,
-      delay: 2,
-      stagger: 0.25,
+      duration: 0.62,
+      delay: 0.85,
+      stagger: 0.1,
+      ease: 'power3.out',
     });
   }
-
-  ngOnDestroy(): void {}
 
   toggleRegistration() {
     this.openRegistration = !this.openRegistration;

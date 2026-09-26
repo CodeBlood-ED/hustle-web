@@ -1,0 +1,53 @@
+@if (product) {
+  <section class="product-detail">
+    <a class="back-link" [routerLink]="['/landing/categories', modelName]">← Back to {{ modelLabel }}</a>
+
+    <div class="detail-layout">
+      <div class="visual-panel" [style.--accent]="product.accent">
+        <div class="phone-frame">
+          <div class="phone-screen"></div>
+        </div>
+      </div>
+
+      <div class="content-panel">
+        <span class="badge">{{ product.tag }}</span>
+        <h1>{{ product.name }}</h1>
+
+        <div class="meta-row">
+          <span class="price">{{ product.price }}</span>
+          <span class="stock">In stock</span>
+        </div>
+
+        <p class="description">{{ product.description }}</p>
+
+        <div class="swatches">
+          <span class="swatch-label">Colors</span>
+          <div class="swatches-row">
+            @for (color of product.colors; track color) {
+              <span class="dot" [style.background]="color"></span>
+            }
+          </div>
+        </div>
+
+        <div class="feature-list">
+          <h3>Why it stands out</h3>
+          <ul>
+            @for (feature of product.features; track feature) {
+              <li>{{ feature }}</li>
+            }
+          </ul>
+        </div>
+
+        <div class="cta-row">
+          <button class="primary" type="button" (click)="addToCart()">Add to cart</button>
+          <button class="secondary" type="button" (click)="buyNow()">Buy now</button>
+        </div>
+      </div>
+    </div>
+  </section>
+} @else {
+  <section class="product-detail unavailable-page">
+    <h1>We couldn’t find that product.</h1>
+    <a class="back-link" [routerLink]="['/landing/categories']">Return to the case collection</a>
+  </section>
+}

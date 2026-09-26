@@ -1,0 +1,14 @@
+<a class="category-card" [routerLink]="productPath" [style.--accent]="accent">
+  <span class="category-pill">{{ count }} styles</span>
+
+  <div class="card-visual" aria-hidden="true">
+    <span class="case case-a"></span>
+    <span class="case case-b"></span>
+    <span class="case case-c"></span>
+  </div>
+
+  <div class="card-copy">
+    <h3>{{ title }}</h3>
+    <p>{{ subtitle }}</p>
+  </div>
+</a>

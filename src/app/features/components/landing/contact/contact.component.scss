@@ -1,0 +1,223 @@
+@use 'breakpoints' as bp;
+
+:host,
+:host * {
+	font-family: var(--font-ui);
+}
+
+:host {
+	display: block;
+	color: var(--brand-text);
+}
+
+.contact-page {
+	width: min(1120px, calc(100% - 48px));
+	margin: 0 auto;
+	padding: 62px 0 96px;
+}
+
+.contact-intro {
+	max-width: 760px;
+	padding-bottom: 42px;
+	border-bottom: 1px solid var(--line);
+}
+
+.eyebrow {
+	margin: 0 0 12px;
+	color: var(--brand-green);
+	font-size: 0.72rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+.contact-intro h1 {
+	margin: 0;
+	font-family: var(--font-display);
+	font-size: clamp(4rem, 9vw, 7rem);
+	font-weight: 400;
+	line-height: 0.95;
+}
+
+.contact-intro h1 span { color: var(--brand-green); }
+
+.contact-intro > p:last-child {
+	max-width: 580px;
+	margin: 20px 0 0;
+	color: var(--muted);
+	font-size: 1rem;
+	line-height: 1.75;
+}
+
+.contact-layout {
+	display: grid;
+	grid-template-columns: minmax(0, 0.85fr) minmax(380px, 1.15fr);
+	gap: clamp(40px, 8vw, 112px);
+	padding-top: 48px;
+}
+
+.contact-details {
+	display: flex;
+	flex-direction: column;
+}
+
+.contact-detail {
+	display: grid;
+	grid-template-columns: 40px minmax(0, 1fr);
+	gap: 14px;
+	padding: 20px 0;
+	border-bottom: 1px solid var(--line);
+}
+
+.detail-index {
+	color: var(--brand-green);
+	font-family: var(--font-display);
+	font-size: 1.2rem;
+}
+
+.contact-detail h2 {
+	margin: 0 0 5px;
+	font-family: var(--font-display);
+	font-size: 1.6rem;
+	font-weight: 400;
+}
+
+.contact-detail p,
+.response-note {
+	margin: 0;
+	color: var(--muted);
+	font-size: 0.88rem;
+	line-height: 1.65;
+	overflow-wrap: anywhere;
+}
+
+.response-note {
+	margin-top: 22px;
+	padding: 14px 16px;
+	border-left: 3px solid var(--brand-green);
+	background: rgba(255, 255, 255, 0.55);
+}
+
+.contact-form {
+	display: flex;
+	flex-direction: column;
+	padding: 26px;
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	background: rgba(255, 255, 255, 0.58);
+}
+
+.form-heading { margin-bottom: 10px; }
+
+.form-heading .eyebrow { margin-bottom: 8px; }
+
+.form-heading h2 {
+	margin: 0;
+	font-family: var(--font-display);
+	font-size: 2rem;
+	font-weight: 400;
+}
+
+.contact-form label {
+	margin: 15px 0 7px;
+	color: #393634;
+	font-size: 0.78rem;
+	font-weight: 600;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+	width: 100%;
+	min-width: 0;
+	min-height: 46px;
+	padding: 11px 12px;
+	border: 1px solid rgba(23, 23, 23, 0.16);
+	border-radius: 6px;
+	outline: none;
+	color: var(--brand-text);
+	background: rgba(255, 255, 255, 0.8);
+	font: inherit;
+	font-size: 0.85rem;
+}
+
+.contact-form textarea {
+	min-height: 132px;
+	resize: vertical;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+	border-color: var(--brand-green);
+	box-shadow: 0 0 0 3px rgba(13, 145, 126, 0.1);
+}
+
+.contact-form button {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	min-height: 48px;
+	margin-top: 18px;
+	padding: 0 16px;
+	border: 0;
+	border-radius: 6px;
+	color: #fff;
+	background: var(--brand-black);
+	cursor: pointer;
+	font: inherit;
+	font-size: 0.86rem;
+	font-weight: 600;
+	transition: background 160ms ease;
+}
+
+.contact-form button:hover { background: var(--brand-green); }
+
+.contact-form button span { font-size: 1.2rem; }
+
+.form-note {
+	margin: 11px 0 0;
+	color: var(--muted);
+	font-size: 0.72rem;
+	line-height: 1.5;
+}
+
+@include bp.down(bp.$tablet) {
+	.contact-page {
+		width: calc(100% - 40px);
+		padding: 44px 0 72px;
+	}
+
+	.contact-layout {
+		grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
+		gap: 28px;
+	}
+
+	.contact-form { padding: 20px; }
+}
+
+@include bp.down(bp.$mobile) {
+	.contact-page {
+		width: calc(100% - 32px);
+		padding: 32px 0 56px;
+	}
+
+	.contact-intro { padding-bottom: 30px; }
+
+	.contact-intro h1 { font-size: clamp(3.5rem, 18vw, 5rem); }
+
+	.contact-layout {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 28px;
+		padding-top: 26px;
+	}
+
+	.contact-detail { padding: 16px 0; }
+
+	.contact-form {
+		padding: 18px 14px;
+		border-radius: 8px;
+	}
+
+	.form-heading h2 { font-size: 1.8rem; }
+}

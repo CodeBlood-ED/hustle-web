@@ -1,24 +1,27 @@
 <section>
-    <div class="part1">
-        <h1 id="my">my</h1>
-        <h1 id="h">H</h1>
-        <h1 id="in">.in</h1>
-    </div>
+    <a class="part1 wordmark" [routerLink]="['/landing']" aria-label="Hustle home">Hustle<span>.</span></a>
     <div class="part2">
         @for(eachItem of items; track eachItem.id) {
         <a [routerLink]="eachItem.page_address"><div class="sub-section">{{eachItem.name}}</div></a>
         }
     </div>
-    <div class="part_2_mobile" (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)">
-        <div class="mobile_track" [style.transform]="'translateX(' + (-activeIndex * 100) + '%)'">
+    <button class="mobile-menu-toggle" type="button" (click)="toggleMenu()"
+        [attr.aria-expanded]="menuOpen" aria-controls="mobile-navigation"
+        [attr.aria-label]="menuOpen ? 'Close navigation menu' : 'Open navigation menu'">
+        <span class="menu-glyph" [class.is-open]="menuOpen" aria-hidden="true">
+            <span></span><span></span><span></span>
+        </span>
+    </button>
+    @if (menuOpen) {
+        <nav class="mobile-navigation" id="mobile-navigation" aria-label="Mobile navigation">
             @for(eachItem of items; track eachItem.id) {
-            <div class="sub-section_mobile"><a [routerLink]="eachItem.page_address">{{eachItem.name}}</a></div>
+                <a [routerLink]="eachItem.page_address" (click)="closeMenu()">{{eachItem.name}}</a>
             }
-        </div>
-    </div>
+        </nav>
+    }
     <div class="part3">
-        <div class="signUp" (click)="toggleRegistration()">Create an account</div>
-        <div class="logIn" (click)="toggleLogin()">Login here!</div>
+        <button class="signUp" type="button" (click)="toggleRegistration()">Create an account</button>
+        <button class="logIn" type="button" (click)="toggleLogin()">Login here!</button>
         <app-signup></app-signup>
         <app-login></app-login>
     </div>

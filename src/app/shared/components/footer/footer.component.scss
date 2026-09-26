@@ -1,41 +1,196 @@
-.main{
-    width:100%;
-    height: 30vh;
-    position:relative;
-    bottom:0;
-    background-color:black;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    padding:30px 50px;
-    .sec {
-        display:flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap:2vh;
-        font-family: fc;
-        color:white
-    }
-    .section3{
+@use 'breakpoints' as bp;
 
-    }
+:host,
+:host * {
+  font-family: 'Poppins', sans-serif;
 }
 
-@media screen and (max-width: 768px) {
-  .main {
-    height: auto;
-    grid-template-columns: 1fr;
-    gap: 4vh;
-    padding: 40px 20px;
-    .sec {
-      gap: 1.5vh;
-      text-align: center;
-      h1 {
-        font-size: 22px;
-      }
-      h3 {
-        font-size: 16px;
-      }
-    }
+:host {
+  display: block;
+  width: 100%;
+}
+
+.site-footer {
+  width: 100%;
+  background: #111111;
+  color: #f5f5f5;
+  padding: 64px 6vw 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.4fr 1.2fr 1fr 1fr 1fr;
+  gap: 36px;
+  padding-bottom: 34px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-top > * {
+  min-width: 0;
+}
+
+
+.brand-block,
+.newsletter-block {
+  max-width: 420px;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #fac5d2;
+  font-weight: 700;
+}
+
+.brand-block h2 {
+  margin: 0 0 10px;
+  font-size: clamp(2rem, 1.4rem + 1vw, 3rem);
+  line-height: 1.15;
+  font-family: var(--font-display);
+}
+
+.tagline,
+.newsletter-block p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.8;
+}
+
+.newsletter-block {
+  padding: 18px 18px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+}
+
+.newsletter-block h3,
+.link-group h3 {
+  margin: 0 0 10px;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.subscribe-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.subscribe-form input {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #ffffff;
+  padding: 12px 14px;
+  outline: none;
+}
+
+.subscribe-form input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.subscribe-form button {
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #fac5d2, #0d917e);
+  color: #111111;
+  font-weight: 700;
+  padding: 12px 16px;
+  min-height: 44px;
+  cursor: pointer;
+}
+
+.link-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.link-group a {
+  color: #f5f5f5;
+  text-decoration: none;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.link-group a:hover {
+  opacity: 1;
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 22px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.92rem;
+}
+
+.legal-links {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.legal-links a {
+  color: rgba(255, 255, 255, 0.72);
+  text-decoration: none;
+}
+
+@include bp.down(bp.$desktop) {
+  .footer-top {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
   }
+
+  .newsletter-block {
+    grid-column: span 2;
+    max-width: none;
+  }
+}
+
+@include bp.down(bp.$tablet) {
+  .site-footer {
+    padding: 48px 22px 28px;
+  }
+
+  .footer-top {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .legal-links {
+    flex-wrap: wrap;
+    gap: 10px 16px;
+  }
+
+  .subscribe-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@include bp.down(bp.$mobile) {
+  .site-footer { padding: 40px 16px 24px; }
+
+  .newsletter-block { padding: 16px; }
+
+  .legal-links { gap: 6px 14px; }
+
+  .legal-links a,
+  .link-group a { min-height: 36px; }
 }

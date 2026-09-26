@@ -1,4 +1,52 @@
-* {
-    width:100%;
-    height: 100vh;
+@use 'breakpoints' as bp;
+
+:host,
+:host * {
+  font-family: 'Poppins', sans-serif;
+}
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.category-page {
+  width: 100%;
+  padding: 42px 6vw 90px;
+}
+
+.page-header {
+  margin-bottom: 26px;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #0d917e;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 1.8rem + 1vw, 4rem);
+  font-family: var(--font-display);
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+  gap: 22px;
+}
+
+@include bp.down(bp.$mobile) {
+  .category-page {
+    padding: 32px 18px 56px;
+  }
+
+  .category-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
 }

@@ -1,0 +1,29 @@
+<section class="product-collection">
+  @if (hasModel) {
+    <div class="top-bar">
+      <a class="back-link" [routerLink]="['/landing/categories']">← Back to categories</a>
+      <h1>{{ selectedModelLabel }}</h1>
+    </div>
+
+    <div class="product-grid">
+      @for (product of products; track product.id) {
+        <app-product-card
+          [productId]="product.id"
+          [name]="product.name"
+          [description]="product.description"
+          [price]="product.price"
+          [tag]="product.tag"
+          [accent]="product.accent"
+          [colors]="product.colors"
+          [model]="currentModel"
+          [detailLink]="'/landing/categories/' + currentModel + '/' + product.id"
+        ></app-product-card>
+      }
+    </div>
+  } @else {
+    <div class="top-bar">
+      <a class="back-link" [routerLink]="['/landing/categories']">← Back to categories</a>
+      <h1>We couldn’t find that collection.</h1>
+    </div>
+  }
+</section>

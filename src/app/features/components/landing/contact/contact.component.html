@@ -1,1 +1,62 @@
-<p>contact works!</p>
+<main class="contact-page">
+	<section class="contact-intro">
+		<p class="eyebrow">We’re here to help</p>
+		<h1>Let’s talk<span>.</span></h1>
+		<p>Questions about an order, a product, or something else? Send us a note and we’ll point you in the right direction.</p>
+	</section>
+
+	<section class="contact-layout">
+		<div class="contact-details">
+			<article class="contact-detail">
+				<span class="detail-index">01</span>
+				<div>
+					<h2>Email</h2>
+					<p>{{'support@hustle.in'}}</p>
+				</div>
+			</article>
+			<article class="contact-detail">
+				<span class="detail-index">02</span>
+				<div>
+					<h2>Phone</h2>
+					<p>Connect with us at +917001896350 (Charges may apply)</p>
+				</div>
+			</article>
+			<article class="contact-detail">
+				<span class="detail-index">03</span>
+				<div>
+					<h2>Hours</h2>
+					<p>Monday - Friday (11AM - 6PM)</p> 
+				</div>
+			</article>
+			<p class="response-note">Typical response within a day or two</p>
+		</div>
+
+		<form class="contact-form" (submit)="$event.preventDefault()">
+			<div class="form-heading">
+				<p class="eyebrow">Send a message</p>
+				<h2>How can we help?</h2>
+			</div>
+
+			<label for="contact-name">Your name</label>
+			<input id="contact-name" name="name" type="text" autocomplete="name" placeholder="Name" />
+
+			<label for="contact-email">Email address</label>
+			<input id="contact-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" />
+
+			<label for="contact-topic">What is this about?</label>
+			<select id="contact-topic" name="topic">
+				<option value="" selected disabled>Select a topic</option>
+				<option>Order question</option>
+				<option>Product question</option>
+				<option>Returns and exchanges</option>
+				<option>Something else</option>
+			</select>
+
+			<label for="contact-message">Message</label>
+			<textarea id="contact-message" name="message" rows="5" placeholder="Tell us how we can help"></textarea>
+
+			<button type="submit">Send message <span aria-hidden="true">→</span></button>
+			<!--<p class="form-note">Connect this form to your support inbox or form service to enable message delivery.</p> -->
+		</form>
+	</section>
+</main>

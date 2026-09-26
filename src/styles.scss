@@ -1,30 +1,78 @@
-@import url('https://fonts.googleapis.com/css2?family=Story+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 
 @font-face {
-    font-family: fc;
-    src: url(../FormulaCondensed-Regular.otf);
+  font-family: fc;
+  src: url('../FormulaCondensed-Regular.otf');
 }
+
 @font-face {
-    font-family: fc-light;
-    src: url(../FormulaCondensed-Light.otf);
+  font-family: fc-light;
+  src: url('../FormulaCondensed-Light.otf');
 }
+
 @font-face {
-    font-family: Pana pro;
-    src: url(../Panama.ttf);
+  font-family: Pana pro;
+  src: url('../Panama.ttf');
+}
+
+:root {
+  --font-display: 'fc', 'Poppins', sans-serif;
+  --font-display-light: 'fc-light', 'Poppins', sans-serif;
+  --font-ui: 'Poppins', sans-serif;
+  --bg-soft: #f6f3f1;
+  --bg-cream: #fffaf6;
+  --brand-green: #0d917e;
+  --brand-pink: #fac5d2;
+  --brand-black: #111111;
+  --brand-text: #171717;
+  --muted: rgba(17, 17, 17, 0.68);
+  --line: rgba(17, 17, 17, 0.09);
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-html,
-body{
-    height:100%;
-    width:100%;
-    background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
+html {
+  scroll-behavior: smooth;
 }
 
+body {
+  min-height: 100vh;
+  width: 100%;
+  font-family: var(--font-ui);
+  background: linear-gradient(180deg, #fffdfb 0%, #f3efed 55%, #eae7e5 100%) fixed;
+  color: var(--brand-text);
+}
 
-//#2d325b
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+input,
+a {
+  font: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-ui);
+}
+
+p,
+span,
+li {
+  font-family: var(--font-ui);
+}
+
+.text-muted {
+  color: var(--muted);
+}

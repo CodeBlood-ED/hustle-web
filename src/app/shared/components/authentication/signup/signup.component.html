@@ -1,5 +1,5 @@
 <div class="main">
-    <form [formGroup]="signupform" class="registration-form" (submit)="onSubmit()" #regForm>
+        <form [formGroup]="signupform" class="registration-form" (ngSubmit)="onSubmit()">
         <h3>Create Account</h3>
         <div class="input-group">
             <input type="text" id="name" placeholder="Name" formControlName="name" required />

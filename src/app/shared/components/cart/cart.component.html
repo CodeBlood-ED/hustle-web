@@ -1,0 +1,57 @@
+@if (cart.entries().length > 0) {
+  <aside class="cart-widget" aria-label="Shopping cart">
+    @if (isOpen) {
+      <section class="cart-panel" aria-label="Your cart">
+        <header class="cart-header">
+          <div class="header-copy">
+            <span class="cart-status" aria-hidden="true"></span>
+            <div>
+              <h2>Your bag</h2>
+              <p>{{ cart.itemCount() }} {{ cart.itemCount() === 1 ? 'item' : 'items' }}</p>
+            </div>
+          </div>
+          <button class="icon-button" type="button" aria-label="Collapse cart" (click)="toggle()">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 14 6-6 6 6" /></svg>
+          </button>
+        </header>
+
+        <div class="cart-items">
+          @for (entry of cart.entries(); track entry.model + ':' + entry.id) {
+            <article class="cart-item">
+              <span class="product-swatch" [style.background]="entry.accent" aria-hidden="true"></span>
+              <div class="item-copy">
+                <h3>{{ entry.name }}</h3>
+                <p>{{ entry.modelLabel }} · {{ entry.unitPrice | currency:'USD':'symbol':'1.0-2' }}</p>
+                <div class="quantity-control" [attr.aria-label]="'Quantity ' + entry.quantity">
+                  <button type="button" [attr.aria-label]="'Remove one ' + entry.name" (click)="cart.decrement(entry.id, entry.model)">−</button>
+                  <span>{{ entry.quantity }}</span>
+                  <button type="button" [attr.aria-label]="'Add one ' + entry.name" (click)="cart.increment(entry.id, entry.model)">+</button>
+                </div>
+              </div>
+              <button class="remove-button" type="button" [attr.aria-label]="'Remove ' + entry.name" (click)="cart.remove(entry.id, entry.model)">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6m4-6v6M6 7l1 13h10l1-13M9 7V4h6v3" /></svg>
+              </button>
+            </article>
+          }
+        </div>
+
+        <footer class="cart-footer">
+          <div class="subtotal-row"><span>Subtotal</span><strong>{{ cart.subtotal() | currency:'USD':'symbol':'1.2-2' }}</strong></div>
+          <p>Shipping and taxes calculated at checkout.</p>
+          <div class="cart-actions">
+            <a class="view-cart-link" [routerLink]="['/cart']" (click)="collapse()">View cart</a>
+            <a class="checkout-button" [routerLink]="['/checkout/cart']" (click)="collapse()">Checkout <span aria-hidden="true">→</span></a>
+          </div>
+        </footer>
+      </section>
+    } @else {
+      <button class="cart-launcher" type="button" (click)="toggle()" aria-expanded="false" aria-label="Open cart">
+        <span class="bag-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M5 8h14l1 13H4L5 8Zm4 0a3 3 0 0 1 6 0" /></svg>
+        </span>
+        <span class="launcher-label">Your bag</span>
+        <span class="item-count">{{ cart.itemCount() }}</span>
+      </button>
+    }
+  </aside>
+}

@@ -1,3 +1,5 @@
+@use 'breakpoints' as bp;
+
 .sec_1 {
   width: 100%;
   height: 100%;
@@ -45,7 +47,7 @@
 // styles written here can never reach content rendered inside <router-outlet>
 // (that's HeroComponent's own template/style scope). The mobile rules for the
 // hero content now live in hero.component.scss instead, where they actually apply.
-@media screen and (max-width: 768px) {
+@include bp.down(bp.$tablet) {
   .sec_1 {
     width: 100%;
     height: auto;

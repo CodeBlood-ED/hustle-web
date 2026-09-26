@@ -1,0 +1,24 @@
+<article class="product-card" [routerLink]="detailLink" [style.--accent]="accent">
+  <div class="product-header">
+    <span class="product-tag">{{ tag }}</span>
+    <span class="product-price">{{ price }}</span>
+  </div>
+
+  <div class="product-visual" aria-hidden="true">
+    <span class="phone-body"></span>
+  </div>
+
+  <div class="product-info">
+    <h3>{{ name }}</h3>
+    <p>{{ description }}</p>
+  </div>
+
+  <div class="product-actions">
+    <div class="color-pills" aria-label="Available colors">
+      @for (color of colors; track color) {
+        <span class="color-dot" [style.background]="color"></span>
+      }
+    </div>
+    <button type="button" (click)="addToCart($event)">Add to cart</button>
+  </div>
+</article>

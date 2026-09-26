@@ -1,1 +1,22 @@
-<p>new-arrivals works!</p>
+<section class="product-collection">
+  <div class="top-bar">
+    <a class="back-link" [routerLink]="['/landing/categories']">← Shop all collections</a>
+    <h1>New arrivals</h1>
+  </div>
+
+  <div class="product-grid">
+    @for (product of products; track product.model + ':' + product.id) {
+      <app-product-card
+        [productId]="product.id"
+        [name]="product.name"
+        [description]="product.description"
+        [price]="product.price"
+        [tag]="product.tag"
+        [accent]="product.accent"
+        [colors]="product.colors"
+        [model]="product.model"
+        [detailLink]="'/landing/categories/' + product.model + '/' + product.id"
+      ></app-product-card>
+    }
+  </div>
+</section>
