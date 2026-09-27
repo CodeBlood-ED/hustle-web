@@ -87,10 +87,10 @@
     }
   }
 }
-.part_3 {
-  width:100%;
-  height:100vh;
-}
+// .part_3 {
+//   width:100%;
+//   height:100vh;
+// }
 @include bp.down(bp.$desktop) {
   .part_1 {
     h1,
