@@ -21,6 +21,7 @@
 
     <div class="button-group">
       <button type="submit" class="login-btn" [disabled]="loginForm.invalid">Go</button>
+      <button type="button" class="cancel-btn" (click)="cancel.emit()">Cancel</button>
     </div>
 
     <h3><button type="button" class="switch-link" (click)="switchToRegister.emit()">Register here!</button></h3>

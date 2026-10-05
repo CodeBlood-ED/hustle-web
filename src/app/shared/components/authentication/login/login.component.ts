@@ -10,6 +10,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export class LoginComponent {
   @Output() switchToRegister = new EventEmitter<void>();
+  @Output() cancel = new EventEmitter<void>();
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),

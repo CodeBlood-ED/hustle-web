@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, ElementRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, HostListener } from '@angular/core';
 import { gsap } from 'gsap';
 import { SignupComponent } from '../authentication/signup/signup.component';
 import { LoginComponent } from '../authentication/login/login.component';
@@ -14,17 +13,8 @@ import { NavbarEntranceService } from '../../services/navbar-entrance.service';
   imports: [SignupComponent, LoginComponent, RouterLink],
 })
 export class NavbarComponent implements AfterViewInit {
-  constructor(
-    private el: ElementRef,
-    private router: Router,
-    private entranceAnimation: NavbarEntranceService,
-  ) {}
-  openRegistration: boolean = false;
-  openLogin: boolean = false;
   menuOpen = false;
-
-  tl = gsap.timeline();
-  tl_login = gsap.timeline();
+  activeAuth: 'none' | 'signup' | 'login' = 'none';
 
   items = [
     { id: 0, name: 'Categories', page_address: '/landing/categories' },
@@ -32,6 +22,13 @@ export class NavbarComponent implements AfterViewInit {
     { id: 2, name: 'Contact', page_address: '/landing/contact' },
     { id: 3, name: 'About us', page_address: '/landing/about' },
   ];
+
+  constructor(
+    private el: ElementRef<HTMLElement>,
+    private router: Router,
+    private entranceAnimation: NavbarEntranceService,
+  ) {}
+
   toggleMenu(): void {
     this.menuOpen = !this.menuOpen;
   }
@@ -69,162 +66,240 @@ export class NavbarComponent implements AfterViewInit {
     });
   }
 
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    if (this.activeAuth === 'none') return;
+
+    const target = event.target as HTMLElement | null;
+    if (!target) return;
+
+    const part3 = this.el.nativeElement.querySelector('.part3');
+    if (part3 && part3.contains(target)) {
+      return;
+    }
+
+    this.closeAuth();
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    if (this.activeAuth !== 'none') {
+      this.closeAuth();
+    }
+  }
+
+  closeAuth(): void {
+    if (this.activeAuth === 'none') return;
+    this.activeAuth = 'none';
+
+    const signUpButton = this.el.nativeElement.querySelector('.signUp');
+    const loginButton = this.el.nativeElement.querySelector('.logIn');
+    const signupForm = this.el.nativeElement.querySelector('app-signup .main');
+    const loginForm = this.el.nativeElement.querySelector('app-login .main');
+
+    gsap.killTweensOf([signUpButton, loginButton, signupForm, loginForm]);
+
+    const tl = gsap.timeline();
+
+    if (signupForm) {
+      tl.to(
+        signupForm,
+        {
+          opacity: 0,
+          height: 0,
+          pointerEvents: 'none',
+          duration: 0.3,
+          ease: 'power2.inOut',
+        },
+        0,
+      );
+    }
+
+    if (loginForm) {
+      tl.to(
+        loginForm,
+        {
+          opacity: 0,
+          height: 0,
+          pointerEvents: 'none',
+          duration: 0.3,
+          ease: 'power2.inOut',
+        },
+        0,
+      );
+    }
+
+    if (signUpButton) {
+      tl.to(
+        signUpButton,
+        {
+          width: '50%',
+          color: '#111',
+          clearProps: 'left,right,overflow',
+          duration: 0.3,
+          ease: 'power2.out',
+        },
+        0,
+      );
+    }
+
+    if (loginButton) {
+      tl.to(
+        loginButton,
+        {
+          width: '50%',
+          color: '#111',
+          padding: '5px 20px',
+          clearProps: 'left,right,overflow',
+          duration: 0.3,
+          ease: 'power2.out',
+        },
+        0,
+      );
+    }
+  }
+
+  openSignup(): void {
+    this.activeAuth = 'signup';
+
+    const signUpButton = this.el.nativeElement.querySelector('.signUp');
+    const loginButton = this.el.nativeElement.querySelector('.logIn');
+    const signupForm = this.el.nativeElement.querySelector('app-signup .main');
+    const loginForm = this.el.nativeElement.querySelector('app-login .main');
+
+    gsap.killTweensOf([signUpButton, loginButton, signupForm, loginForm]);
+
+    if (loginForm) {
+      gsap.set(loginForm, { opacity: 0, height: 0, pointerEvents: 'none' });
+    }
+
+    const tl = gsap.timeline();
+
+    if (signUpButton) {
+      tl.to(
+        signUpButton,
+        {
+          width: '100%',
+          color: 'white',
+          duration: 0.25,
+          ease: 'power2.out',
+        },
+        0,
+      );
+    }
+
+    if (loginButton) {
+      tl.to(
+        loginButton,
+        {
+          width: '0%',
+          padding: '0',
+          overflow: 'hidden',
+          color: '#fac5d2',
+          duration: 0.25,
+          ease: 'power2.out',
+        },
+        0,
+      );
+    }
+
+    if (signupForm) {
+      tl.to(
+        signupForm,
+        {
+          opacity: 1,
+          height: 'auto',
+          pointerEvents: 'auto',
+          zIndex: 1100,
+          duration: 0.3,
+          ease: 'power2.out',
+        },
+        0.05,
+      );
+    }
+  }
+
+  openLogin(): void {
+    this.activeAuth = 'login';
+
+    const signUpButton = this.el.nativeElement.querySelector('.signUp');
+    const loginButton = this.el.nativeElement.querySelector('.logIn');
+    const signupForm = this.el.nativeElement.querySelector('app-signup .main');
+    const loginForm = this.el.nativeElement.querySelector('app-login .main');
+
+    gsap.killTweensOf([signUpButton, loginButton, signupForm, loginForm]);
+
+    if (signupForm) {
+      gsap.set(signupForm, { opacity: 0, height: 0, pointerEvents: 'none' });
+    }
+
+    const tl = gsap.timeline();
+
+    if (loginButton) {
+      tl.to(
+        loginButton,
+        {
+          width: '100%',
+          color: 'white',
+          duration: 0.25,
+          ease: 'power2.out',
+        },
+        0,
+      );
+    }
+
+    if (signUpButton) {
+      tl.to(
+        signUpButton,
+        {
+          width: '0%',
+          padding: '0',
+          overflow: 'hidden',
+          color: '#0d917e',
+          duration: 0.25,
+          ease: 'power2.out',
+        },
+        0,
+      );
+    }
+
+    if (loginForm) {
+      tl.to(
+        loginForm,
+        {
+          opacity: 1,
+          height: 'auto',
+          pointerEvents: 'auto',
+          zIndex: 1100,
+          duration: 0.3,
+          ease: 'power2.out',
+        },
+        0.05,
+      );
+    }
+  }
+
+  toggleRegistration(): void {
+    if (this.activeAuth === 'signup') {
+      this.closeAuth();
+    } else {
+      this.openSignup();
+    }
+  }
+
+  toggleLogin(): void {
+    if (this.activeAuth === 'login') {
+      this.closeAuth();
+    } else {
+      this.openLogin();
+    }
+  }
+
   openLoginFromSignup(): void {
-    if (this.openRegistration) {
-      this.toggleRegistration();
-    }
-    if (!this.openLogin) {
-      this.toggleLogin();
-    }
+    this.openLogin();
   }
 
   openSignupFromLogin(): void {
-    if (this.openLogin) {
-      this.toggleLogin();
-    }
-    if (!this.openRegistration) {
-      this.toggleRegistration();
-    }
-  }
-
-  toggleRegistration() {
-    this.openRegistration = !this.openRegistration;
-
-    const signupForm = this.el.nativeElement.querySelector('app-signup .main');
-    const signUpButton = this.el.nativeElement.querySelector('.signUp');
-    //const loginForm = this.el.nativeElement.querySelector('');
-    const loginButton = this.el.nativeElement.querySelector('.logIn');
-    //const breakLine = this.el.nativeElement.querySelector('.breakLine');
-    if (!signupForm) return;
-
-    if (this.openRegistration) {
-      // Animate signup form in
-
-      this.tl
-        .to(signUpButton, {
-          width: '100%',
-          color: 'white',
-          duration: 0.2,
-          ease: 'power2.out',
-        })
-        .to(
-          loginButton,
-          {
-            width: '0%',
-            padding: '0',
-            right: '-50%',
-            overflow: 'hidden',
-            color: '#fac5d2',
-            ease: 'power2.out',
-          },
-          '-=0.3',
-        )
-        .to(signupForm, {
-          opacity: 1,
-          height: 'auto',
-          pointerEvents: 'auto',
-          zIndex: '1100',
-          duration: 0.2,
-          ease: 'power2.out',
-        });
-    } else {
-      // Animate signup form out
-      this.tl
-        .to(signupForm, {
-          opacity: 0,
-          height: '0%',
-          pointerEvents: 'none',
-          duration: 0.5,
-          ease: 'power2.out',
-        })
-        .to(signUpButton, {
-          width: '100%',
-          color: 'white',
-          ease: 'power2.out',
-        })
-        .to(
-          loginButton,
-          {
-            width: '100%',
-            height: '50',
-            padding: '5 20',
-
-            color: 'white',
-            overflow: '',
-            ease: 'power2.out',
-          },
-          '-=0.5',
-        );
-    }
-  }
-
-  toggleLogin() {
-    this.openLogin = !this.openLogin;
-
-    //const signupForm = this.el.nativeElement.querySelector('app-signup .main');
-    const signUpButton = this.el.nativeElement.querySelector('.signUp');
-    const loginForm = this.el.nativeElement.querySelector('app-login .main');
-    const loginButton = this.el.nativeElement.querySelector('.logIn');
-
-    if (!loginForm) return;
-
-    if (this.openLogin) {
-      this.tl_login
-        .to(loginButton, {
-          width: '100%',
-          color: 'white',
-          duration: 0.2,
-          ease: 'power2.out',
-        })
-        .to(
-          signUpButton,
-          {
-            width: '0%',
-            padding: '0',
-            left: '-50%',
-            overflow: 'hidden',
-            color: '#0d917e',
-            ease: 'power2.out',
-          },
-          '-=0.3',
-        )
-        .to(loginForm, {
-          opacity: 1,
-          height: 'auto',
-          pointerEvents: 'auto',
-          zIndex: '1100',
-          duration: 0.2,
-          ease: 'power2.out',
-        });
-    } else {
-      // Animate login form out
-
-      this.tl_login
-        .to(loginForm, {
-          opacity: '0',
-          height: '0%',
-          pointerEvents: 'none',
-          duration: 0.5,
-          ease: 'power2.out',
-        })
-        .to(signUpButton, {
-          width: '100%',
-          color: 'white',
-          ease: 'power2.out',
-        })
-        .to(
-          loginButton,
-          {
-            width: '100%',
-            height: '50',
-            padding: '5 20',
-
-            color: 'white',
-            overflow: '',
-            ease: 'power2.out',
-          },
-          '-=0.5',
-        );
-    }
+    this.openSignup();
   }
 }
