@@ -69,29 +69,7 @@ export class NavbarComponent implements AfterViewInit {
     });
   }
 
-  openLoginFromSignup(): void {
-    if (this.openRegistration) {
-      this.toggleRegistration();
-    }
-    if (!this.openLogin) {
-      this.toggleLogin();
-    }
-  }
-
-  openSignupFromLogin(): void {
-    if (this.openLogin) {
-      this.toggleLogin();
-    }
-    if (!this.openRegistration) {
-      this.toggleRegistration();
-    }
-  }
-
   toggleRegistration() {
-    if (!this.openRegistration && this.openLogin) {
-      this.toggleLogin();
-    }
-
     this.openRegistration = !this.openRegistration;
 
     const signupForm = this.el.nativeElement.querySelector('app-signup .main');
@@ -163,10 +141,6 @@ export class NavbarComponent implements AfterViewInit {
   }
 
   toggleLogin() {
-    if (!this.openLogin && this.openRegistration) {
-      this.toggleRegistration();
-    }
-
     this.openLogin = !this.openLogin;
 
     //const signupForm = this.el.nativeElement.querySelector('app-signup .main');

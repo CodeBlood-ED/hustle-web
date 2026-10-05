@@ -1,5 +1,5 @@
 <div class="main">
-    <form [formGroup]="signupform" class="registration-form" (ngSubmit)="onSubmit()">
+        <form [formGroup]="signupform" class="registration-form" (ngSubmit)="onSubmit()">
         <h3>Create Account</h3>
         <div class="input-group">
             <input type="text" id="name" placeholder="Name" formControlName="name" required />
@@ -13,10 +13,10 @@
         <div class="input-group">
             <input type="password" placeholder="Password" formControlName="password" required />
         </div>
-        <button type="button" class="switch-link" (click)="switchToLogin.emit()">Already have an account?</button>
+        <a href="#">Already have an account? </a>
         <div class="button-group">
             <button type="submit" id="submit-btn">Sign Up</button>
-            <button type="button" id="close-btn" (click)="cancel.emit()">Cancel</button>
+            <button type="button" id="close-btn">Cancel</button>
         </div>
     </form>
 </div>

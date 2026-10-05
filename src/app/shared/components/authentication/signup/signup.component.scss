@@ -70,19 +70,10 @@
         cursor:pointer;
       }
     }
-    a,
-    .switch-link {
+    a{
       text-decoration: none;
-      color: white;
+      color:white;
       font-size: 20px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-family: inherit;
-
-      &:hover {
-        text-decoration: underline;
-      }
     }
   }
 }

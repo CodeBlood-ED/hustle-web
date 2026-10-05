@@ -165,3 +165,4 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     this.animationContext?.revert();
   }
 }
+

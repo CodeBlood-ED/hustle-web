@@ -2,7 +2,7 @@
     <h1>Browse Cases</h1>
     <div class="quick_access">
         @for(eachproduct of productList; track eachproduct.id) {
-        <a [routerLink]="['/landing/categories', eachproduct.model]">
+        <a href="#">
             <div class="items">{{eachproduct.prod_name}}</div>
         </a>
         }
@@ -17,3 +17,7 @@
             exclusively for the Apple ecosystem.</p>
     </div>
 </section>
+
+<!-- <section class="part_3">
+    
+</section> -->

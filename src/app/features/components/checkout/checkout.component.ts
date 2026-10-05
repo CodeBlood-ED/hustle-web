@@ -99,3 +99,4 @@ export class CheckoutComponent implements OnInit {
     return parsePrice(this.product?.price ?? '');
   }
 }
+
