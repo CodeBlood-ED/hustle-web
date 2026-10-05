@@ -58,15 +58,8 @@ section {
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
     position: relative;
-
-    app-user-profile {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      z-index: 1200;
-    }
 
     .signUp {
       height: 50px;
@@ -240,15 +233,6 @@ section {
       grid-area: account;
       width: 100%;
       height: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      app-user-profile {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-      }
 
       .signUp,
       .logIn {

@@ -11,6 +11,10 @@
   }
 
   @if (isOpen()) {
+  @if (mode === 'dropdown') {
+  <div class="backdrop" (click)="closeDropdown()" aria-hidden="true"></div>
+  }
+
   <div class="profile-modal" [class.page-view]="mode === 'page'" role="dialog" aria-label="User Profile">
     <!-- Modal Header -->
     <div class="modal-header">
