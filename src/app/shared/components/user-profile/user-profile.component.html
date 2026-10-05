@@ -5,7 +5,6 @@
     <div class="avatar-circle">{{ getInitials() }}</div>
     <div class="trigger-meta">
       <span class="user-name">{{ authService.currentUser()?.name || 'My Account' }}</span>
-      <span class="user-badge">{{ authService.currentUser()?.role === 'ROLE_ADMIN' ? 'Admin' : 'Customer' }}</span>
     </div>
     <span class="caret" [class.rotated]="isOpen()">▼</span>
   </button>
@@ -24,8 +23,6 @@
         <div>
           <h3>{{ authService.currentUser()?.name }}</h3>
           <p class="email-sub">{{ authService.currentUser()?.email }}</p>
-          <span class="role-pill">{{ authService.currentUser()?.role === 'ROLE_ADMIN' ? 'Administrator' : 'Verified
-            Customer' }}</span>
         </div>
       </div>
       @if (mode === 'dropdown') {
@@ -81,10 +78,6 @@
           <div class="detail-row">
             <span class="label">Contact Number</span>
             <span class="val">{{ authService.currentUser()?.contact || 'Not provided' }}</span>
-          </div>
-          <div class="detail-row">
-            <span class="label">Account Role</span>
-            <span class="val">{{ authService.currentUser()?.role }}</span>
           </div>
           <div class="detail-row">
             <span class="label">Member Since</span>

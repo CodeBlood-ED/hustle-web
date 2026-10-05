@@ -96,6 +96,10 @@ export class CartService {
     );
   }
 
+  clear(): void {
+    this.entriesState.set([]);
+  }
+
   private getKey(productId: number, model: string): string {
     return `${resolveCatalogModel(model) ?? model}:${productId}`;
   }

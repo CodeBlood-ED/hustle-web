@@ -1,4 +1,33 @@
-@if (isCartCheckout && cart.entries().length === 0) {
+@if (orderPlaced && placedOrder) {
+  <main class="checkout-page order-success-page">
+    <div class="order-success-card">
+      <div class="success-icon-badge">✓</div>
+      <h1>Order Placed Successfully!</h1>
+      <p class="order-ref">Order Reference: <strong>#{{ placedOrder.orderNumber }}</strong></p>
+      <p class="order-subtext">Thank you, {{ placedOrder.customerName }}! Your order has been placed and is currently being processed.</p>
+      
+      <div class="order-summary-box">
+        <div class="summary-line">
+          <span>Total Paid:</span>
+          <strong>{{ placedOrder.totalAmount | currency:'INR':'symbol':'1.0-0' }}</strong>
+        </div>
+        <div class="summary-line">
+          <span>Shipping:</span>
+          <span>{{ placedOrder.shippingMethod }} ({{ placedOrder.shippingAddress }}, {{ placedOrder.city || '' }})</span>
+        </div>
+        <div class="summary-line">
+          <span>Status:</span>
+          <span class="status-pill">{{ placedOrder.status }}</span>
+        </div>
+      </div>
+
+      <div class="success-actions">
+        <a class="btn-primary" [routerLink]="['/landing/profile']">View in Order History</a>
+        <a class="btn-secondary" [routerLink]="['/landing/categories']">Continue Shopping</a>
+      </div>
+    </div>
+  </main>
+} @else if (isCartCheckout && cart.entries().length === 0) {
   <main class="checkout-page unavailable-page">
     <h1>Your bag is empty.</h1>
     <a class="back-link" [routerLink]="['/landing/categories']">Browse iPhone cases</a>
@@ -26,27 +55,27 @@
           </div>
 
           <label class="field-label" for="email">Email address</label>
-          <input id="email" class="field" type="email" name="email" placeholder="you@example.com" autocomplete="email" required email ngModel />
+          <input id="email" class="field" type="email" name="email" placeholder="you@example.com" autocomplete="email" required email [(ngModel)]="customerEmail" />
 
           <label class="field-label" for="full-name">Full name</label>
-          <input id="full-name" class="field" type="text" name="fullName" placeholder="Name on delivery" autocomplete="name" required minlength="2" ngModel />
+          <input id="full-name" class="field" type="text" name="fullName" placeholder="Name on delivery" autocomplete="name" required minlength="2" [(ngModel)]="customerName" />
 
           <label class="field-label" for="address">Street address</label>
-          <input id="address" class="field" type="text" name="address" placeholder="House number and street" autocomplete="street-address" required ngModel />
+          <input id="address" class="field" type="text" name="address" placeholder="House number and street" autocomplete="street-address" required [(ngModel)]="streetAddress" />
 
           <div class="field-row">
             <div>
               <label class="field-label" for="city">City</label>
-              <input id="city" class="field" type="text" name="city" autocomplete="address-level2" required ngModel />
+              <input id="city" class="field" type="text" name="city" autocomplete="address-level2" required [(ngModel)]="city" />
             </div>
             <div>
               <label class="field-label" for="postal-code">Postal code</label>
-              <input id="postal-code" class="field" type="text" name="postalCode" autocomplete="postal-code" required ngModel />
+              <input id="postal-code" class="field" type="text" name="postalCode" autocomplete="postal-code" required [(ngModel)]="postalCode" />
             </div>
           </div>
 
           <label class="field-label" for="country">Country / region</label>
-          <select id="country" class="field" name="country" autocomplete="country-name" required ngModel>
+          <select id="country" class="field" name="country" autocomplete="country-name" required [(ngModel)]="country">
             <option value="" disabled selected>Select country</option>
             <option>India</option>
             <option>United States</option>
@@ -56,7 +85,7 @@
           </select>
 
           <label class="field-label" for="phone">Phone number <span class="optional">Optional</span></label>
-          <input id="phone" class="field" type="tel" name="phone" placeholder="For delivery updates" autocomplete="tel" ngModel />
+          <input id="phone" class="field" type="tel" name="phone" placeholder="For delivery updates" autocomplete="tel" [(ngModel)]="customerPhone" />
         </section>
 
         <section class="form-section shipping-section">
@@ -104,7 +133,12 @@
         </section>
 
         <div class="submit-area">
-          <button class="place-order" type="submit">Continue to secure payment <span aria-hidden="true">→</span></button>
+          @if (!isLoggedIn()) {
+            <p class="auth-hint-banner">Please sign in to your account to place your order.</p>
+          }
+          <button class="place-order" type="submit" [disabled]="isSubmitting">
+            {{ isSubmitting ? 'Placing order...' : 'Place Order' }} <span aria-hidden="true">→</span>
+          </button>
           @if (orderMessage) { <p class="order-message" role="status">{{ orderMessage }}</p> }
           <p class="privacy-note">Your delivery information is only used to prepare this order.</p>
         </div>
