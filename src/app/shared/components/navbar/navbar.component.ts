@@ -69,24 +69,6 @@ export class NavbarComponent implements AfterViewInit {
     });
   }
 
-  openLoginFromSignup(): void {
-    if (this.openRegistration) {
-      this.toggleRegistration();
-    }
-    if (!this.openLogin) {
-      this.toggleLogin();
-    }
-  }
-
-  openSignupFromLogin(): void {
-    if (this.openLogin) {
-      this.toggleLogin();
-    }
-    if (!this.openRegistration) {
-      this.toggleRegistration();
-    }
-  }
-
   toggleRegistration() {
     this.openRegistration = !this.openRegistration;
 
