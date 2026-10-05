@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8080/api/v1',
-  backendUrl: 'http://localhost:8080'
+  apiUrl: 'https://hustle-backend-tl9u.onrender.com/api/v1',
+  backendUrl: 'https://hustle-backend-tl9u.onrender.com'
 };

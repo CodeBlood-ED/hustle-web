@@ -1,307 +1,314 @@
 <div class="user-profile-wrapper" [class.is-page]="mode === 'page'" [class.is-open]="isOpen()">
 
   @if (mode === 'dropdown') {
-    <button type="button" class="profile-trigger" (click)="toggleDropdown()" aria-label="Open user profile menu">
-      <div class="avatar-circle">{{ getInitials() }}</div>
-      <div class="trigger-meta">
-        <span class="user-name">{{ authService.currentUser()?.name || 'My Account' }}</span>
-        <span class="user-badge">{{ authService.currentUser()?.role === 'ROLE_ADMIN' ? 'Admin' : 'Customer' }}</span>
-      </div>
-      <span class="caret" [class.rotated]="isOpen()">▼</span>
-    </button>
+  <button type="button" class="profile-trigger" (click)="toggleDropdown()" aria-label="Open user profile menu">
+    <div class="avatar-circle">{{ getInitials() }}</div>
+    <div class="trigger-meta">
+      <span class="user-name">{{ authService.currentUser()?.name || 'My Account' }}</span>
+      <span class="user-badge">{{ authService.currentUser()?.role === 'ROLE_ADMIN' ? 'Admin' : 'Customer' }}</span>
+    </div>
+    <span class="caret" [class.rotated]="isOpen()">▼</span>
+  </button>
   }
 
   @if (isOpen()) {
-    @if (mode === 'dropdown') {
-      <div class="backdrop" (click)="closeDropdown()" aria-hidden="true"></div>
-    }
+  @if (mode === 'dropdown') {
+  <div class="backdrop" (click)="closeDropdown()" aria-hidden="true"></div>
+  }
 
-    <div class="profile-modal" [class.page-view]="mode === 'page'" role="dialog" aria-label="User Profile">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <div class="user-summary">
-          <div class="avatar-large">{{ getInitials() }}</div>
-          <div>
-            <h3>{{ authService.currentUser()?.name }}</h3>
-            <p class="email-sub">{{ authService.currentUser()?.email }}</p>
-            <span class="role-pill">{{ authService.currentUser()?.role === 'ROLE_ADMIN' ? 'Administrator' : 'Verified Customer' }}</span>
+  <div class="profile-modal" [class.page-view]="mode === 'page'" role="dialog" aria-label="User Profile">
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <div class="user-summary">
+        <div class="avatar-large">{{ getInitials() }}</div>
+        <div>
+          <h3>{{ authService.currentUser()?.name }}</h3>
+          <p class="email-sub">{{ authService.currentUser()?.email }}</p>
+          <span class="role-pill">{{ authService.currentUser()?.role === 'ROLE_ADMIN' ? 'Administrator' : 'Verified
+            Customer' }}</span>
+        </div>
+      </div>
+      @if (mode === 'dropdown') {
+      <button type="button" class="close-btn" (click)="closeDropdown()" aria-label="Close profile">✕</button>
+      }
+    </div>
+
+    <!-- Navigation Tabs -->
+    <nav class="profile-tabs" aria-label="Profile navigation">
+      <button type="button" [class.active]="activeTab() === 'info'" (click)="selectTab('info')">
+        Profile Info
+      </button>
+      <button type="button" [class.active]="activeTab() === 'orders'" (click)="selectTab('orders')">
+        Order History
+        @if (orders().length > 0) {
+        <span class="badge">{{ orders().length }}</span>
+        }
+      </button>
+      <button type="button" [class.active]="activeTab() === 'addresses'" (click)="selectTab('addresses')">
+        Saved Addresses
+        @if (addresses().length > 0) {
+        <span class="badge">{{ addresses().length }}</span>
+        }
+      </button>
+      <button type="button" [class.active]="activeTab() === 'enquiries'" (click)="selectTab('enquiries')">
+        Service Requests
+        @if (enquiries().length > 0) {
+        <span class="badge">{{ enquiries().length }}</span>
+        }
+      </button>
+    </nav>
+
+    <!-- Tab Content Area -->
+    <div class="tab-content">
+
+      <!-- TAB 1: PROFILE INFO -->
+      @if (activeTab() === 'info') {
+      <div class="info-panel">
+        @if (profileMessage()) {
+        <div class="alert-success">{{ profileMessage() }}</div>
+        }
+
+        @if (!isEditingProfile()) {
+        <div class="details-grid">
+          <div class="detail-row">
+            <span class="label">Full Name</span>
+            <span class="val">{{ authService.currentUser()?.name }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Email Address</span>
+            <span class="val">{{ authService.currentUser()?.email }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Contact Number</span>
+            <span class="val">{{ authService.currentUser()?.contact || 'Not provided' }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Account Role</span>
+            <span class="val">{{ authService.currentUser()?.role }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Member Since</span>
+            <span class="val">{{ authService.currentUser()?.createdAt | date:'mediumDate' }}</span>
           </div>
         </div>
-        @if (mode === 'dropdown') {
-          <button type="button" class="close-btn" (click)="closeDropdown()" aria-label="Close profile">✕</button>
+
+        <div class="actions-row">
+          <button type="button" class="btn-primary" (click)="isEditingProfile.set(true)">Edit Profile</button>
+        </div>
+        } @else {
+        <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="edit-profile-form">
+          <div class="form-group">
+            <label for="prof-name">Full Name</label>
+            <input id="prof-name" type="text" formControlName="name" class="input-field" required />
+          </div>
+          <div class="form-group">
+            <label for="prof-contact">Contact Number</label>
+            <input id="prof-contact" type="text" formControlName="contact" class="input-field" required />
+          </div>
+          <div class="actions-row">
+            <button type="submit" class="btn-primary" [disabled]="profileForm.invalid || isSavingProfile()">
+              {{ isSavingProfile() ? 'Saving...' : 'Save Changes' }}
+            </button>
+            <button type="button" class="btn-secondary" (click)="isEditingProfile.set(false)">Cancel</button>
+          </div>
+        </form>
         }
       </div>
+      }
 
-      <!-- Navigation Tabs -->
-      <nav class="profile-tabs" aria-label="Profile navigation">
-        <button type="button" [class.active]="activeTab() === 'info'" (click)="selectTab('info')">
-          Profile Info
-        </button>
-        <button type="button" [class.active]="activeTab() === 'orders'" (click)="selectTab('orders')">
-          Order History
-          @if (orders().length > 0) {
-            <span class="badge">{{ orders().length }}</span>
-          }
-        </button>
-        <button type="button" [class.active]="activeTab() === 'addresses'" (click)="selectTab('addresses')">
-          Saved Addresses
-          @if (addresses().length > 0) {
-            <span class="badge">{{ addresses().length }}</span>
-          }
-        </button>
-        <button type="button" [class.active]="activeTab() === 'enquiries'" (click)="selectTab('enquiries')">
-          Service Requests
-          @if (enquiries().length > 0) {
-            <span class="badge">{{ enquiries().length }}</span>
-          }
-        </button>
-      </nav>
-
-      <!-- Tab Content Area -->
-      <div class="tab-content">
-
-        <!-- TAB 1: PROFILE INFO -->
-        @if (activeTab() === 'info') {
-          <div class="info-panel">
-            @if (profileMessage()) {
-              <div class="alert-success">{{ profileMessage() }}</div>
-            }
-
-            @if (!isEditingProfile()) {
-              <div class="details-grid">
-                <div class="detail-row">
-                  <span class="label">Full Name</span>
-                  <span class="val">{{ authService.currentUser()?.name }}</span>
-                </div>
-                <div class="detail-row">
-                  <span class="label">Email Address</span>
-                  <span class="val">{{ authService.currentUser()?.email }}</span>
-                </div>
-                <div class="detail-row">
-                  <span class="label">Contact Number</span>
-                  <span class="val">{{ authService.currentUser()?.contact || 'Not provided' }}</span>
-                </div>
-                <div class="detail-row">
-                  <span class="label">Account Role</span>
-                  <span class="val">{{ authService.currentUser()?.role }}</span>
-                </div>
-                <div class="detail-row">
-                  <span class="label">Member Since</span>
-                  <span class="val">{{ authService.currentUser()?.createdAt | date:'mediumDate' }}</span>
-                </div>
+      <!-- TAB 2: ORDER HISTORY -->
+      @if (activeTab() === 'orders') {
+      <div class="orders-panel">
+        @if (isLoadingOrders()) {
+        <p class="loading-state">Loading your orders...</p>
+        } @else if (orders().length === 0) {
+        <div class="empty-state">
+          <p>You haven’t placed any orders yet.</p>
+          <a [routerLink]="['/landing/categories']" (click)="closeDropdown()" class="btn-primary">Browse iPhone
+            Cases</a>
+        </div>
+        } @else {
+        <div class="orders-list">
+          @for (order of orders(); track order.id) {
+          <div class="order-card">
+            <div class="order-card-header">
+              <div>
+                <strong>Order #{{ order.orderNumber }}</strong>
+                <span class="order-date">{{ order.createdAt | date:'mediumDate' }}</span>
               </div>
+              <span class="status-badge" [class]="order.status.toLowerCase()">{{ order.status }}</span>
+            </div>
 
-              <div class="actions-row">
-                <button type="button" class="btn-primary" (click)="isEditingProfile.set(true)">Edit Profile</button>
+            <div class="order-card-items">
+              @for (item of order.items; track item.id) {
+              <div class="order-item-row">
+                <span>{{ item.productTitle }} ({{ item.model }}) × {{ item.quantity }}</span>
+                <strong>{{ item.subtotal | currency:'INR':'symbol':'1.0-0' }}</strong>
               </div>
-            } @else {
-              <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="edit-profile-form">
-                <div class="form-group">
-                  <label for="prof-name">Full Name</label>
-                  <input id="prof-name" type="text" formControlName="name" class="input-field" required />
-                </div>
-                <div class="form-group">
-                  <label for="prof-contact">Contact Number</label>
-                  <input id="prof-contact" type="text" formControlName="contact" class="input-field" required />
-                </div>
-                <div class="actions-row">
-                  <button type="submit" class="btn-primary" [disabled]="profileForm.invalid || isSavingProfile()">
-                    {{ isSavingProfile() ? 'Saving...' : 'Save Changes' }}
-                  </button>
-                  <button type="button" class="btn-secondary" (click)="isEditingProfile.set(false)">Cancel</button>
-                </div>
-              </form>
-            }
-          </div>
-        }
-
-        <!-- TAB 2: ORDER HISTORY -->
-        @if (activeTab() === 'orders') {
-          <div class="orders-panel">
-            @if (isLoadingOrders()) {
-              <p class="loading-state">Loading your orders...</p>
-            } @else if (orders().length === 0) {
-              <div class="empty-state">
-                <p>You haven’t placed any orders yet.</p>
-                <a [routerLink]="['/landing/categories']" (click)="closeDropdown()" class="btn-primary">Browse iPhone Cases</a>
-              </div>
-            } @else {
-              <div class="orders-list">
-                @for (order of orders(); track order.id) {
-                  <div class="order-card">
-                    <div class="order-card-header">
-                      <div>
-                        <strong>Order #{{ order.orderNumber }}</strong>
-                        <span class="order-date">{{ order.createdAt | date:'mediumDate' }}</span>
-                      </div>
-                      <span class="status-badge" [class]="order.status.toLowerCase()">{{ order.status }}</span>
-                    </div>
-
-                    <div class="order-card-items">
-                      @for (item of order.items; track item.id) {
-                        <div class="order-item-row">
-                          <span>{{ item.productTitle }} ({{ item.model }}) × {{ item.quantity }}</span>
-                          <strong>{{ item.subtotal | currency:'INR':'symbol':'1.0-0' }}</strong>
-                        </div>
-                      }
-                    </div>
-
-                    <div class="order-card-footer">
-                      <span>Total Paid: <strong>{{ order.totalAmount | currency:'INR':'symbol':'1.0-0' }}</strong></span>
-                      <span class="ship-method">{{ order.shippingMethod }} Delivery</span>
-                    </div>
-                  </div>
-                }
-              </div>
-            }
-          </div>
-        }
-
-        <!-- TAB 3: SAVED ADDRESSES -->
-        @if (activeTab() === 'addresses') {
-          <div class="addresses-panel">
-            @if (!showAddAddress()) {
-              <div class="header-action">
-                <h4>Your Delivery Addresses</h4>
-                <button type="button" class="btn-secondary" (click)="showAddAddress.set(true)">+ Add New Address</button>
-              </div>
-
-              @if (addresses().length === 0) {
-                <p class="empty-text">No saved addresses. Add an address for faster checkout.</p>
-              } @else {
-                <div class="addresses-list">
-                  @for (addr of addresses(); track addr.id) {
-                    <div class="address-card">
-                      <div class="address-header">
-                        <strong>{{ addr.label }}</strong>
-                        @if (addr.default) {
-                          <span class="default-badge">Default</span>
-                        }
-                      </div>
-                      <p>{{ addr.streetAddress }}, {{ addr.city }}, {{ addr.state }} {{ addr.postalCode }}</p>
-                      <p>{{ addr.country }}</p>
-                      <button type="button" class="delete-link" (click)="deleteAddress(addr.id)">Delete</button>
-                    </div>
-                  }
-                </div>
               }
-            } @else {
-              <form [formGroup]="addressForm" (ngSubmit)="saveAddress()" class="add-address-form">
-                <h4>Add Delivery Address</h4>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="addr-label">Address Label</label>
-                    <input id="addr-label" type="text" formControlName="label" placeholder="e.g. Home, Work" class="input-field" required />
-                  </div>
-                  <div class="form-group">
-                    <label for="addr-postal">Postal Code</label>
-                    <input id="addr-postal" type="text" formControlName="postalCode" placeholder="Postal Code" class="input-field" required />
-                  </div>
-                </div>
+            </div>
 
-                <div class="form-group">
-                  <label for="addr-street">Street Address</label>
-                  <input id="addr-street" type="text" formControlName="streetAddress" placeholder="House/Flat number and street" class="input-field" required />
-                </div>
-
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="addr-city">City</label>
-                    <input id="addr-city" type="text" formControlName="city" class="input-field" required />
-                  </div>
-                  <div class="form-group">
-                    <label for="addr-state">State</label>
-                    <input id="addr-state" type="text" formControlName="state" class="input-field" />
-                  </div>
-                </div>
-
-                <label class="checkbox-row">
-                  <input type="checkbox" formControlName="isDefault" />
-                  <span>Set as default address</span>
-                </label>
-
-                <div class="actions-row">
-                  <button type="submit" class="btn-primary" [disabled]="addressForm.invalid || isSavingAddress()">
-                    {{ isSavingAddress() ? 'Saving...' : 'Save Address' }}
-                  </button>
-                  <button type="button" class="btn-secondary" (click)="showAddAddress.set(false)">Cancel</button>
-                </div>
-              </form>
-            }
+            <div class="order-card-footer">
+              <span>Total Paid: <strong>{{ order.totalAmount | currency:'INR':'symbol':'1.0-0' }}</strong></span>
+              <span class="ship-method">{{ order.shippingMethod }} Delivery</span>
+            </div>
           </div>
+          }
+        </div>
         }
+      </div>
+      }
 
-        <!-- TAB 4: SERVICE REQUESTS & ENQUIRIES -->
-        @if (activeTab() === 'enquiries') {
-          <div class="enquiries-panel">
-            @if (!showAddEnquiry()) {
-              <div class="header-action">
-                <h4>Service Requests & Enquiries</h4>
-                <button type="button" class="btn-secondary" (click)="showAddEnquiry.set(true)">+ New Request</button>
-              </div>
+      <!-- TAB 3: SAVED ADDRESSES -->
+      @if (activeTab() === 'addresses') {
+      <div class="addresses-panel">
+        @if (!showAddAddress()) {
+        <div class="header-action">
+          <h4>Your Delivery Addresses</h4>
+          <button type="button" class="btn-secondary" (click)="showAddAddress.set(true)">+ Add New Address</button>
+        </div>
 
-              @if (enquiries().length === 0) {
-                <p class="empty-text">No active service requests or enquiries found.</p>
-              } @else {
-                <div class="enquiries-list">
-                  @for (enq of enquiries(); track enq.id) {
-                    <div class="enquiry-card">
-                      <div class="enquiry-header">
-                        <div>
-                          <strong>{{ enq.subject }}</strong>
-                          <span class="enquiry-type">{{ enq.type }}</span>
-                        </div>
-                        <span class="status-badge" [class]="enq.status.toLowerCase()">{{ enq.status }}</span>
-                      </div>
-                      <p class="enquiry-msg">{{ enq.message }}</p>
-                      <span class="enquiry-date">Submitted on {{ enq.createdAt | date:'mediumDate' }}</span>
-                    </div>
-                  }
-                </div>
+        @if (addresses().length === 0) {
+        <p class="empty-text">No saved addresses. Add an address for faster checkout.</p>
+        } @else {
+        <div class="addresses-list">
+          @for (addr of addresses(); track addr.id) {
+          <div class="address-card">
+            <div class="address-header">
+              <strong>{{ addr.label }}</strong>
+              @if (addr.default) {
+              <span class="default-badge">Default</span>
               }
-            } @else {
-              <form [formGroup]="enquiryForm" (ngSubmit)="submitEnquiry()" class="add-enquiry-form">
-                <h4>Submit Service Request or Enquiry</h4>
-                <div class="form-group">
-                  <label for="enq-type">Request Type</label>
-                  <select id="enq-type" formControlName="type" class="input-field">
-                    <option value="SERVICE_REQUEST">Service / Support Request</option>
-                    <option value="ORDER_SUPPORT">Order Support</option>
-                    <option value="PRODUCT_ENQUIRY">Product Enquiry</option>
-                    <option value="GENERAL">General Feedback</option>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <label for="enq-subj">Subject</label>
-                  <input id="enq-subj" type="text" formControlName="subject" placeholder="Brief subject" class="input-field" required />
-                </div>
-
-                <div class="form-group">
-                  <label for="enq-msg">Details / Message</label>
-                  <textarea id="enq-msg" formControlName="message" rows="4" placeholder="Describe your request or enquiry in detail..." class="input-field" required></textarea>
-                </div>
-
-                <div class="actions-row">
-                  <button type="submit" class="btn-primary" [disabled]="enquiryForm.invalid || isSubmittingEnquiry()">
-                    {{ isSubmittingEnquiry() ? 'Submitting...' : 'Submit Request' }}
-                  </button>
-                  <button type="button" class="btn-secondary" (click)="showAddEnquiry.set(false)">Cancel</button>
-                </div>
-              </form>
-            }
+            </div>
+            <p>{{ addr.streetAddress }}, {{ addr.city }}, {{ addr.state }} {{ addr.postalCode }}</p>
+            <p>{{ addr.country }}</p>
+            <button type="button" class="delete-link" (click)="deleteAddress(addr.id)">Delete</button>
           </div>
+          }
+        </div>
         }
+        } @else {
+        <form [formGroup]="addressForm" (ngSubmit)="saveAddress()" class="add-address-form">
+          <h4>Add Delivery Address</h4>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="addr-label">Address Label</label>
+              <input id="addr-label" type="text" formControlName="label" placeholder="e.g. Home, Work"
+                class="input-field" required />
+            </div>
+            <div class="form-group">
+              <label for="addr-postal">Postal Code</label>
+              <input id="addr-postal" type="text" formControlName="postalCode" placeholder="Postal Code"
+                class="input-field" required />
+            </div>
+          </div>
 
-      </div>
+          <div class="form-group">
+            <label for="addr-street">Street Address</label>
+            <input id="addr-street" type="text" formControlName="streetAddress"
+              placeholder="House/Flat number and street" class="input-field" required />
+          </div>
 
-      <!-- Modal Footer -->
-      <div class="modal-footer">
-        <button type="button" class="logout-btn" (click)="logout()">
-          <span>Sign Out</span>
-        </button>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="addr-city">City</label>
+              <input id="addr-city" type="text" formControlName="city" class="input-field" required />
+            </div>
+            <div class="form-group">
+              <label for="addr-state">State</label>
+              <input id="addr-state" type="text" formControlName="state" class="input-field" />
+            </div>
+          </div>
+
+          <label class="checkbox-row">
+            <input type="checkbox" formControlName="isDefault" />
+            <span>Set as default address</span>
+          </label>
+
+          <div class="actions-row">
+            <button type="submit" class="btn-primary" [disabled]="addressForm.invalid || isSavingAddress()">
+              {{ isSavingAddress() ? 'Saving...' : 'Save Address' }}
+            </button>
+            <button type="button" class="btn-secondary" (click)="showAddAddress.set(false)">Cancel</button>
+          </div>
+        </form>
+        }
       </div>
+      }
+
+      <!-- TAB 4: SERVICE REQUESTS & ENQUIRIES -->
+      @if (activeTab() === 'enquiries') {
+      <div class="enquiries-panel">
+        @if (!showAddEnquiry()) {
+        <div class="header-action">
+          <h4>Service Requests & Enquiries</h4>
+          <button type="button" class="btn-secondary" (click)="showAddEnquiry.set(true)">+ New Request</button>
+        </div>
+
+        @if (enquiries().length === 0) {
+        <p class="empty-text">No active service requests or enquiries found.</p>
+        } @else {
+        <div class="enquiries-list">
+          @for (enq of enquiries(); track enq.id) {
+          <div class="enquiry-card">
+            <div class="enquiry-header">
+              <div>
+                <strong>{{ enq.subject }}</strong>
+                <span class="enquiry-type">{{ enq.type }}</span>
+              </div>
+              <span class="status-badge" [class]="enq.status.toLowerCase()">{{ enq.status }}</span>
+            </div>
+            <p class="enquiry-msg">{{ enq.message }}</p>
+            <span class="enquiry-date">Submitted on {{ enq.createdAt | date:'mediumDate' }}</span>
+          </div>
+          }
+        </div>
+        }
+        } @else {
+        <form [formGroup]="enquiryForm" (ngSubmit)="submitEnquiry()" class="add-enquiry-form">
+          <h4>Submit Service Request or Enquiry</h4>
+          <div class="form-group">
+            <label for="enq-type">Request Type</label>
+            <select id="enq-type" formControlName="type" class="input-field">
+              <option value="SERVICE_REQUEST">Service / Support Request</option>
+              <option value="ORDER_SUPPORT">Order Support</option>
+              <option value="PRODUCT_ENQUIRY">Product Enquiry</option>
+              <option value="GENERAL">General Feedback</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="enq-subj">Subject</label>
+            <input id="enq-subj" type="text" formControlName="subject" placeholder="Brief subject" class="input-field"
+              required />
+          </div>
+
+          <div class="form-group">
+            <label for="enq-msg">Details / Message</label>
+            <textarea id="enq-msg" formControlName="message" rows="4"
+              placeholder="Describe your request or enquiry in detail..." class="input-field" required></textarea>
+          </div>
+
+          <div class="actions-row">
+            <button type="submit" class="btn-primary" [disabled]="enquiryForm.invalid || isSubmittingEnquiry()">
+              {{ isSubmittingEnquiry() ? 'Submitting...' : 'Submit Request' }}
+            </button>
+            <button type="button" class="btn-secondary" (click)="showAddEnquiry.set(false)">Cancel</button>
+          </div>
+        </form>
+        }
+      </div>
+      }
 
     </div>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+      <button type="button" class="logout-btn" (click)="logout()">
+        <span>Sign Out</span>
+      </button>
+    </div>
+
+  </div>
   }
 </div>
