@@ -21,7 +21,7 @@
               <span class="product-swatch" [style.background]="entry.accent" aria-hidden="true"></span>
               <div class="item-copy">
                 <h3>{{ entry.name }}</h3>
-                <p>{{ entry.modelLabel }} · {{ entry.unitPrice | currency:'USD':'symbol':'1.0-2' }}</p>
+                <p>{{ entry.modelLabel }} · {{ entry.unitPrice | currency:'INR':'symbol':'1.0-0' }}</p>
                 <div class="quantity-control" [attr.aria-label]="'Quantity ' + entry.quantity">
                   <button type="button" [attr.aria-label]="'Remove one ' + entry.name" (click)="cart.decrement(entry.id, entry.model)">−</button>
                   <span>{{ entry.quantity }}</span>
@@ -36,7 +36,7 @@
         </div>
 
         <footer class="cart-footer">
-          <div class="subtotal-row"><span>Subtotal</span><strong>{{ cart.subtotal() | currency:'USD':'symbol':'1.2-2' }}</strong></div>
+          <div class="subtotal-row"><span>Subtotal</span><strong>{{ cart.subtotal() | currency:'INR':'symbol':'1.0-0' }}</strong></div>
           <p>Shipping and taxes calculated at checkout.</p>
           <div class="cart-actions">
             <a class="view-cart-link" [routerLink]="['/cart']" (click)="collapse()">View cart</a>

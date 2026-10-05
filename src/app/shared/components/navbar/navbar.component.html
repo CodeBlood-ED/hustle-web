@@ -22,7 +22,7 @@
     <div class="part3">
         <button class="signUp" type="button" (click)="toggleRegistration()">Create an account</button>
         <button class="logIn" type="button" (click)="toggleLogin()">Login here!</button>
-        <app-signup></app-signup>
-        <app-login></app-login>
+        <app-signup (cancel)="toggleRegistration()" (switchToLogin)="openLoginFromSignup()"></app-signup>
+        <app-login (switchToRegister)="openSignupFromLogin()"></app-login>
     </div>
 </section>

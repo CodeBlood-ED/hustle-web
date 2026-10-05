@@ -48,6 +48,7 @@
           <label class="field-label" for="country">Country / region</label>
           <select id="country" class="field" name="country" autocomplete="country-name" required ngModel>
             <option value="" disabled selected>Select country</option>
+            <option>India</option>
             <option>United States</option>
             <option>Canada</option>
             <option>United Kingdom</option>
@@ -65,13 +66,13 @@
 
           <label class="choice-row" [class.is-selected]="shippingMethod === 'standard'">
             <input type="radio" name="shipping" value="standard" [(ngModel)]="shippingMethod" />
-            <span class="choice-copy"><strong>Standard delivery</strong><small>5–7 business days</small></span>
-            <span class="choice-price">{{ subtotal >= 50 ? 'Free' : (4.95 | currency:'USD') }}</span>
+            <span class="choice-copy"><strong>Standard delivery</strong><small>3–5 business days</small></span>
+            <span class="choice-price">{{ subtotal >= 999 ? 'Free' : (49 | currency:'INR':'symbol':'1.0-0') }}</span>
           </label>
           <label class="choice-row" [class.is-selected]="shippingMethod === 'express'">
             <input type="radio" name="shipping" value="express" [(ngModel)]="shippingMethod" />
-            <span class="choice-copy"><strong>Express delivery</strong><small>2–3 business days</small></span>
-            <span class="choice-price">{{ 9.95 | currency:'USD' }}</span>
+            <span class="choice-copy"><strong>Express delivery</strong><small>1–2 business days</small></span>
+            <span class="choice-price">{{ 99 | currency:'INR':'symbol':'1.0-0' }}</span>
           </label>
         </section>
 
@@ -125,7 +126,7 @@
                     <button type="button" [attr.aria-label]="'Increase ' + entry.name" (click)="updateCartQuantity(entry, 1)">+</button>
                   </div>
                 </div>
-                <strong class="line-price">{{ entry.unitPrice * entry.quantity | currency:'USD' }}</strong>
+                <strong class="line-price">{{ entry.unitPrice * entry.quantity | currency:'INR':'symbol':'1.0-0' }}</strong>
               </div>
             }
           </div>
@@ -141,15 +142,15 @@
                 <button type="button" aria-label="Increase quantity" (click)="updateQuantity(1)">+</button>
               </div>
             </div>
-            <strong class="line-price">{{ subtotal | currency:'USD' }}</strong>
+            <strong class="line-price">{{ subtotal | currency:'INR':'symbol':'1.0-0' }}</strong>
           </div>
         }
 
         <div class="totals">
-          <div><span>Subtotal</span><span>{{ subtotal | currency:'USD' }}</span></div>
-          <div><span>Shipping</span><span>{{ shippingCost === 0 ? 'Free' : (shippingCost | currency:'USD') }}</span></div>
-          <div><span>Estimated tax</span><span>{{ estimatedTax | currency:'USD' }}</span></div>
-          <div class="grand-total"><strong>Total</strong><strong>{{ total | currency:'USD' }}</strong></div>
+          <div><span>Subtotal</span><span>{{ subtotal | currency:'INR':'symbol':'1.0-0' }}</span></div>
+          <div><span>Shipping</span><span>{{ shippingCost === 0 ? 'Free' : (shippingCost | currency:'INR':'symbol':'1.0-0') }}</span></div>
+          <div><span>Estimated tax</span><span>{{ estimatedTax | currency:'INR':'symbol':'1.0-0' }}</span></div>
+          <div class="grand-total"><strong>Total</strong><strong>{{ total | currency:'INR':'symbol':'1.0-0' }}</strong></div>
         </div>
         <p class="summary-footnote">Taxes are estimated and may change based on your delivery address.</p>
       </aside>

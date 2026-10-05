@@ -63,12 +63,12 @@ export class CheckoutComponent implements OnInit {
   }
 
   get shippingCost(): number {
-    if (this.shippingMethod === 'express') return 9.95;
-    return this.subtotal >= 50 ? 0 : 4.95;
+    if (this.shippingMethod === 'express') return 99;
+    return this.subtotal >= 999 ? 0 : 49;
   }
 
   get estimatedTax(): number {
-    return this.subtotal * 0.08;
+    return Math.round(this.subtotal * 0.18);
   }
 
   get total(): number {

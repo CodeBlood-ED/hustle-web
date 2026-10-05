@@ -23,6 +23,6 @@
       <button type="submit" class="login-btn" [disabled]="loginForm.invalid">Go</button>
     </div>
 
-    <h3><a href="/landing/categories">Register here!</a></h3>
+    <h3><button type="button" class="switch-link" (click)="switchToRegister.emit()">Register here!</button></h3>
   </form>
 </section>
