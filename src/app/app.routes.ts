@@ -57,7 +57,19 @@ export const routes: Routes = [
             (module) => module.AboutComponent,
           ),
       },
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./shared/components/user-profile/user-profile.component').then(
+            (module) => module.UserProfileComponent,
+          ),
+      },
     ]
+  },
+  {
+    path: 'profile',
+    redirectTo: 'landing/profile',
+    pathMatch: 'full'
   },
   { path: '**', redirectTo: 'landing' }
 ];
