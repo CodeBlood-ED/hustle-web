@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, inject } from '@angular/core';
+import { AfterViewInit, Component, effect, ElementRef, HostListener, inject } from '@angular/core';
 import { gsap } from 'gsap';
 import { SignupComponent } from '../authentication/signup/signup.component';
 import { LoginComponent } from '../authentication/login/login.component';
@@ -30,7 +30,13 @@ export class NavbarComponent implements AfterViewInit {
     private el: ElementRef<HTMLElement>,
     private router: Router,
     private entranceAnimation: NavbarEntranceService,
-  ) {}
+  ) {
+    effect(() => {
+      if (this.authService.isLoggedIn() && this.activeAuth !== 'none') {
+        this.activeAuth = 'none';
+      }
+    });
+  }
 
   toggleMenu(): void {
     this.menuOpen = !this.menuOpen;
