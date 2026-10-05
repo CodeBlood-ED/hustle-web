@@ -1,22 +1,31 @@
 <div class="main">
-        <form [formGroup]="signupform" class="registration-form" (ngSubmit)="onSubmit()">
+    <form [formGroup]="signupform" class="registration-form" (ngSubmit)="onSubmit()">
         <h3>Create Account</h3>
+
+        @if (errorMessage()) {
+            <div class="auth-error-banner" role="alert">
+                {{ errorMessage() }}
+            </div>
+        }
+
         <div class="input-group">
-            <input type="text" id="name" placeholder="Name" formControlName="name" required />
+            <input type="text" id="name" placeholder="Name" formControlName="name" required autocomplete="name" />
         </div>
         <div class="input-group">
-            <input type="text" placeholder="Email Address" formControlName="email" required />
+            <input type="email" placeholder="Email Address" formControlName="email" required autocomplete="email" />
         </div>
         <div class="input-group">
-            <input type="text" placeholder="Contact no." formControlName="contact" required />
+            <input type="tel" placeholder="Contact no." formControlName="contact" required autocomplete="tel" />
         </div>
         <div class="input-group">
-            <input type="password" placeholder="Password" formControlName="password" required />
+            <input type="password" placeholder="Password" formControlName="password" required autocomplete="new-password" />
         </div>
-        <a href="#">Already have an account? </a>
+        <a href="#" (click)="switchToLogin.emit(); $event.preventDefault()">Already have an account? </a>
         <div class="button-group">
-            <button type="submit" id="submit-btn">Sign Up</button>
-            <button type="button" id="close-btn">Cancel</button>
+            <button type="submit" id="submit-btn" [disabled]="signupform.invalid || isLoading()">
+                {{ isLoading() ? 'Signing up...' : 'Sign Up' }}
+            </button>
+            <button type="button" id="close-btn" (click)="onCancel()" [disabled]="isLoading()">Cancel</button>
         </div>
     </form>
 </div>

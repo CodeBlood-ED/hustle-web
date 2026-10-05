@@ -20,9 +20,13 @@
         </nav>
     }
     <div class="part3">
-        <button class="signUp" type="button" (click)="toggleRegistration()">Create an account</button>
-        <button class="logIn" type="button" (click)="toggleLogin()">Login here!</button>
-        <app-signup (cancel)="closeAuth()" (switchToLogin)="openLoginFromSignup()"></app-signup>
-        <app-login (cancel)="closeAuth()" (switchToRegister)="openSignupFromLogin()"></app-login>
+        @if (!authService.isLoggedIn()) {
+            <button class="signUp" type="button" (click)="toggleRegistration()">Create an account</button>
+            <button class="logIn" type="button" (click)="toggleLogin()">Login here!</button>
+            <app-signup (cancel)="closeAuth()" (switchToLogin)="openLoginFromSignup()"></app-signup>
+            <app-login (cancel)="closeAuth()" (switchToRegister)="openSignupFromLogin()"></app-login>
+        } @else {
+            <app-user-profile [mode]="'dropdown'"></app-user-profile>
+        }
     </div>
 </section>

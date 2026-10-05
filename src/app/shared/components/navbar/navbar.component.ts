@@ -1,18 +1,21 @@
-import { AfterViewInit, Component, ElementRef, HostListener } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, inject } from '@angular/core';
 import { gsap } from 'gsap';
 import { SignupComponent } from '../authentication/signup/signup.component';
 import { LoginComponent } from '../authentication/login/login.component';
+import { UserProfileComponent } from '../user-profile/user-profile.component';
 import { Router, RouterLink } from '@angular/router';
 import { NavbarEntranceService } from '../../services/navbar-entrance.service';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
-  imports: [SignupComponent, LoginComponent, RouterLink],
+  imports: [SignupComponent, LoginComponent, UserProfileComponent, RouterLink],
 })
 export class NavbarComponent implements AfterViewInit {
+  readonly authService = inject(AuthService);
   menuOpen = false;
   activeAuth: 'none' | 'signup' | 'login' = 'none';
 
