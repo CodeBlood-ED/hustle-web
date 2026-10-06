@@ -34,11 +34,9 @@
       <button type="button" class="cancel-btn" (click)="onCancel()" [disabled]="isLoading()">Cancel</button>
     </div>
 
-    <h3>
-      <button type="button" class="switch-link" (click)="switchToRegister.emit()" [disabled]="isLoading()">
-        Register here!
-      </button>
-    </h3>
+    <button type="button" class="switch-link" (click)="switchToRegister.emit()" [disabled]="isLoading()">
+      Register here!
+    </button>
   </form>
 </section>
 

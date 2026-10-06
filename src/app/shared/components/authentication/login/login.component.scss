@@ -50,22 +50,15 @@
       align-items: center;
       gap: 2vh;
 
-      input[type="password"] {
+      input {
         width: 60%;
         height: 60px;
         font-size: 30px;
         border: none;
+        outline: none;
         text-align: center;
         font-family: fc-light;
-      }
-
-      input[type="email"] {
-        width: 60%;
-        height: 60px;
-        font-size: 30px;
-        border: none;
-        text-align: center;
-        font-family: fc-light;
+        box-sizing: border-box;
       }
     }
 
@@ -120,16 +113,24 @@
     }
 
     .switch-link {
-      background: none;
+      background: transparent;
+      background-color: transparent;
       border: none;
+      outline: none;
+      box-shadow: none;
       color: white;
       cursor: pointer;
       font-family: fc-light;
-      font-size: inherit;
-      text-decoration: underline;
+      font-size: 20px;
+      line-height: 1.2;
+      padding: 0;
+      margin: 0;
+      text-decoration: none;
+      transition: color 0.2s ease, text-decoration 0.2s ease, opacity 0.2s ease;
 
       &:hover:not(:disabled) {
-        color: #ddd;
+        color: var(--brand-pink, #fac5d2);
+        text-decoration: underline;
       }
 
       &:disabled {
@@ -157,8 +158,7 @@
       gap: 1.5vh;
       .input-group {
         gap: 1.5vh;
-        input[type="password"],
-        input[type="email"] {
+        input {
           width: 90%;
           height: 50px;
           font-size: 20px;
@@ -172,6 +172,9 @@
           height: 50px;
           font-size: 18px;
         }
+      }
+      .switch-link {
+        font-size: 16px;
       }
       a {
         font-size: 16px;
